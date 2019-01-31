@@ -180,7 +180,7 @@ let g:lsc_server_commands = {
   \}
 let g:lsc_auto_map = {
     \ 'GoToDefinition': 'gd',
-    \ 'GoToDefinitionSplit': '<C-W><C-]>'],
+    \ 'GoToDefinitionSplit': '<C-W><C-]>',
     \ 'FindReferences': 'gr',
     \ 'NextReference': '<C-n>',
     \ 'PreviousReference': '<C-p>',
