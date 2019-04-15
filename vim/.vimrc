@@ -176,15 +176,6 @@ nnoremap <C-g> :NERDTreeToggle<CR>
 " Configuration for vim-lsc
 let g:lsc_enable_autocomplete = v:false
 let g:lsc_server_commands = {
-  \ 'scala': 'metals-vim'
+  \ 'scala': 'metals-vim',
+  \    'log_level': 'Log'
   \}
-let g:lsc_auto_map = {
-    \ 'GoToDefinition': 'gd',
-    \ 'GoToDefinitionSplit': '<C-W><C-]>',
-    \ 'FindReferences': 'gr',
-    \ 'NextReference': '<C-n>',
-    \ 'PreviousReference': '<C-p>',
-    \ 'FindImplementations': 'gI',
-    \ 'DocumentSymbol': 'go',
-    \ 'WorkspaceSymbol': 'gS',
-    \}
