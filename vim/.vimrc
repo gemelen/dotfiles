@@ -57,7 +57,7 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Coloring
-colorscheme carrot
+colorscheme duoduo
 
 " statusbar, see https://www.vi-improved.org/recommendations/
 set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
@@ -174,8 +174,23 @@ noremap <Right>     :vertical resize -2<CR>
 nnoremap <C-g> :NERDTreeToggle<CR>
 
 " Configuration for vim-lsc
-let g:lsc_enable_autocomplete = v:false
+let g:lsc_enable_autocomplete = v:true
 let g:lsc_server_commands = {
   \ 'scala': 'metals-vim',
   \    'log_level': 'Log'
   \}
+let g:lsc_auto_map = {
+    \ 'GoToDefinition': '<C-]>',
+    \ 'GoToDefinitionSplit': ['<C-W>]', '<C-W><C-]>'],
+    \ 'FindReferences': 'gr',
+    \ 'NextReference': '<C-n>',
+    \ 'PreviousReference': '<C-p>',
+    \ 'FindImplementations': 'gI',
+    \ 'FindCodeActions': 'ga',
+    \ 'Rename': 'gR',
+    \ 'ShowHover': v:true,
+    \ 'DocumentSymbol': 'go',
+    \ 'WorkspaceSymbol': 'gS',
+    \ 'SignatureHelp': 'gm',
+    \ 'Completion': 'completefunc',
+    \}
