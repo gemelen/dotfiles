@@ -22,6 +22,7 @@ Plugin 'derekwyatt/vim-scala'
 Plugin 'natebosch/vim-lsc'      " LSP client
 
 " markdown
+Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 
 " clojure
