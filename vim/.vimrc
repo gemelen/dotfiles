@@ -1,38 +1,40 @@
 set nocompatible
-filetype off                    " required by vundle
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
 
-" No comments
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-commentary'
+" Plugin managemenet
+if has ('nvim')
+    call plug#begin('~/.config/nvim/plugged')
+else
+    call plug#begin('~/.vim/plugged')
+endif
 
-" misc stuff
-Plugin 'scrooloose/nerdtree'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'myusuf3/numbers.vim'	" relative/absolue line numbers
+    " Courtesy of tpope
+    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-commentary'
 
-" java
-Plugin 'java_checkstyle.vim'
+    " misc stuff
+    Plug 'scrooloose/nerdtree'
+    Plug 'flazz/vim-colorschemes'
+    Plug 'myusuf3/numbers.vim'	" relative/absolue line numbers
 
-" scala
-Plugin 'scala.vim'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'natebosch/vim-lsc'      " LSP client
+    " scala
+    Plug 'derekwyatt/vim-scala'
+    " LSP integration, different for Vim and Neovim
+    if has ('nvim')
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    else 
+        Plug 'natebosch/vim-lsc'
+    endif
 
-" markdown
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
+    " markdown
+    Plug 'vim-pandoc/vim-pandoc'
+    Plug 'vim-pandoc/vim-pandoc-syntax'
 
-" clojure
-Plugin 'guns/vim-clojure-static'
-Plugin 'tpope/vim-fireplace'    " REPL support
-Plugin 'tpope/vim-salve'        " Leiningen support
+    " clojure
+    Plug 'guns/vim-clojure-static'
+    Plug 'tpope/vim-fireplace'    " REPL support
+    Plug 'tpope/vim-salve'        " Leiningen support
 
-call vundle#end()               " required by vundle
-filetype plugin indent on       " required by vundle
-syntax on
+call plug#end()
 
 " Write file on switch commands
 set autowrite
@@ -174,24 +176,90 @@ noremap <Right>     :vertical resize -2<CR>
 " toggle presence of NerdTree in tab by Control-g
 nnoremap <C-g> :NERDTreeToggle<CR>
 
-" Configuration for vim-lsc
-let g:lsc_enable_autocomplete = v:true
-let g:lsc_server_commands = {
-  \ 'scala': 'metals-vim',
-  \    'log_level': 'Log'
-  \}
-let g:lsc_auto_map = {
-    \ 'GoToDefinition': '<C-]>',
-    \ 'GoToDefinitionSplit': ['<C-W>]', '<C-W><C-]>'],
-    \ 'FindReferences': 'gr',
-    \ 'NextReference': '<C-n>',
-    \ 'PreviousReference': '<C-p>',
-    \ 'FindImplementations': 'gI',
-    \ 'FindCodeActions': 'ga',
-    \ 'Rename': 'gR',
-    \ 'ShowHover': v:true,
-    \ 'DocumentSymbol': 'go',
-    \ 'WorkspaceSymbol': 'gS',
-    \ 'SignatureHelp': 'gm',
-    \ 'Completion': 'completefunc',
-    \}
+if has ('nvim')
+    " Smaller updatetime for CursorHold & CursorHoldI
+    set updatetime=300
+    " don't give |ins-completion-menu| messages.
+    set shortmess+=c
+    " always show signcolumns
+    set signcolumn=yes
+    " Some server have issues with backup files, see #649
+    set nobackup
+    set nowritebackup
+    " Better display for messages
+    set cmdheight=2
+    
+    " Use <c-space> for trigger completion.
+    inoremap <silent><expr> <c-space> coc#refresh()
+    " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+    " Coc only does snippet and additional edit on confirm.
+    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+    " Use `[c` and `]c` for navigate diagnostics
+    nmap <silent> [c <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+    " Remap keys for gotos
+    nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gy <Plug>(coc-type-definition)
+    nmap <silent> gi <Plug>(coc-implementation)
+    nmap <silent> gr <Plug>(coc-references)
+
+    " Remap for do codeAction of current line
+    nmap <leader>ac <Plug>(coc-codeaction)
+
+    " Remap for do action format
+    nnoremap <silent> F :call CocAction('format')<CR>
+
+    " Use K for show documentation in preview window
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+    function! s:show_documentation()
+    if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+    else
+    call CocAction('doHover')
+    endif
+    endfunction
+
+    " Highlight symbol under cursor on CursorHold
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+
+    " Remap for rename current word
+    nmap <leader>rn <Plug>(coc-rename)
+
+    " Show all diagnostics
+    nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+    " Find symbol of current document
+    nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+    " Search workspace symbols
+    nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+    " Do default action for next item.
+    nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+    " Do default action for previous item.
+    nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+    " Resume latest coc list
+    nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+else
+    " Configuration for vim-lsc
+    let g:lsc_enable_autocomplete = v:true
+    let g:lsc_server_commands = {
+      \ 'scala': 'metals-vim',
+      \    'log_level': 'Log'
+      \}
+    let g:lsc_auto_map = {
+        \ 'GoToDefinition': '<C-]>',
+        \ 'GoToDefinitionSplit': ['<C-W>]', '<C-W><C-]>'],
+        \ 'FindReferences': 'gr',
+        \ 'NextReference': '<C-n>',
+        \ 'PreviousReference': '<C-p>',
+        \ 'FindImplementations': 'gI',
+        \ 'FindCodeActions': 'ga',
+        \ 'Rename': 'gR',
+        \ 'ShowHover': v:true,
+        \ 'DocumentSymbol': 'go',
+        \ 'WorkspaceSymbol': 'gS',
+        \ 'SignatureHelp': 'gm',
+        \ 'Completion': 'completefunc',
+        \}
+endif
+
