@@ -169,7 +169,7 @@ nnoremap N Nzzzv
     endfunction
 
     " Highlight symbol under cursor on CursorHold
-    autocmd FileType scala CursorHold * silent call CocActionAsync('highlight')
+    autocmd CursorHold *.scala silent call CocActionAsync('highlight')
 
     " Remap for rename current word
     nmap <leader>rn <Plug>(coc-rename)
