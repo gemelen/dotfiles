@@ -20,7 +20,6 @@ call plug#begin('~/.config/nvim/plugged')
     " CoC/CoC-metals
     " watch on metals via neovim-lsp
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
 
 " commenting
     Plug 'tomtom/tcomment_vim'
