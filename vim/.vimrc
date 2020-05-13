@@ -4,6 +4,8 @@ set nocompatible
 call plug#begin('~/.config/nvim/plugged')
 
 " Plugins:
+" file explorer
+    Plug 'scrooloose/nerdtree'
 " Look and feel
     Plug 'flazz/vim-colorschemes'
     Plug 'myusuf3/numbers.vim'	" relative/absolue line numbers
