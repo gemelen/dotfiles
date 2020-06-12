@@ -23,6 +23,8 @@ call plug#begin('~/.config/nvim/plugged')
 
 " commenting
     Plug 'tomtom/tcomment_vim'
+" filetypes
+    Plug 'satabin/hocon-vim'
 
 call plug#end()
 
