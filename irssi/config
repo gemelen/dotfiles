@@ -6,6 +6,7 @@ servers = (
     use_ssl = "yes";
     ssl_verify = "yes";
     autoconnect = "yes";
+    password = "CHANGE-ME";
   },
   {
     address = "adams.freenode.net";
@@ -13,6 +14,7 @@ servers = (
     port = "6697";
     use_ssl = "yes";
     ssl_verify = "yes";
+    password = "CHANGE-ME";
   },
   {
     address = "gibson.freenode.net";
@@ -20,6 +22,7 @@ servers = (
     port = "6697";
     use_ssl = "yes";
     ssl_verify = "yes";
+    password = "CHANGE-ME";
   },
   {
     address = "holmes.freenode.net";
@@ -27,6 +30,7 @@ servers = (
     port = "6697";
     use_ssl = "yes";
     ssl_verify = "yes";
+    password = "CHANGE-ME";
   },
   {
     address = "pratchett.freenode.net";
@@ -34,12 +38,12 @@ servers = (
     port = "6697";
     use_ssl = "yes";
     ssl_verify = "yes";
+    password = "CHANGE-ME";
   },
   {
     address = "irc.lucky.net";
     chatnet = "RusNet";
     port = "7777";
-    autoconnect = "yes";
   },
   { address = "irc.tambov.ru"; 
     chatnet = "RusNet"; 
@@ -58,7 +62,6 @@ chatnets = {
   };
   freenode = {
     type = "IRC";
-    autosendcmd = "/^msg NickServ IDENTIFY CHANGE-ME";
     max_kicks = "3";
     max_msgs = "3";
     max_whos = "3";
@@ -67,15 +70,16 @@ chatnets = {
 };
 
 channels = (
+  # RusNet
   { name = "#c"; chatnet = "RusNet"; autojoin = "yes"; },
   { name = "#fiona"; chatnet = "RusNet"; autojoin = "yes"; },
   { name = "#freebsd"; chatnet = "RusNet"; autojoin = "yes"; },
+  # fredenode
   { name = "#scala"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#devious"; chatnet = "freenode"; autojoin = "yes"; },
   { name = "#smartos"; chatnet = "freenode"; autojoin = "yes"; },
   { name = "#ovh"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#apache-spark"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#vim"; chatnet = "freenode"; autojoin = "yes"; }
+  { name = "#vim"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "##c"; chatnet = "freenode"; autojoin = "yes"; }
 );
 
 aliases = {
@@ -256,7 +260,7 @@ settings = {
     resolve_prefer_ipv6 = "yes";
   };
   "fe-text" = { actlist_sort = "refnum"; };
-  "fe-common/core" = { autolog = "yes"; theme = "sfcblue"; };
+  "fe-common/core" = { autolog = "yes"; theme = "ewq"; };
   "irc/core" = { part_message = "..."; };
 };
 logs = { };
@@ -272,16 +276,6 @@ windows = {
   1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
   2 = {
     items = (
-      { 
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#c";
-        tag = "RusNet";
-      }
-    );
-  };
-  3 = {
-    items = (
       {
         type = "CHANNEL";
         chat_type = "IRC";
@@ -290,17 +284,7 @@ windows = {
       }
     );
   };
-  4 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#devious";
-        tag = "freenode";
-      }
-    );
-  };
-  5 = {
+  3 = {
     items = (
       {
         type = "CHANNEL";
@@ -310,27 +294,7 @@ windows = {
       }
     );
   };
-  6 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#fiona";
-        tag = "RusNet";
-      }
-    );
-  };
-  7 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#freebsd";
-        tag = "RusNet";
-      }
-    );
-  };
-  8 = {
+  4 = {
     items = (
       {
         type = "CHANNEL";
@@ -340,22 +304,22 @@ windows = {
       }
     );
   };
-  9 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#apache-spark";
-        tag = "freenode";
-      }
-    );
-  };
-  10 = {
+  5 = {
     items = (
       {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#vim";
+        tag = "freenode";
+      }
+    );
+  };
+  6 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "##C";
         tag = "freenode";
       }
     );
