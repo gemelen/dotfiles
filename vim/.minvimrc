@@ -12,6 +12,10 @@ set formatoptions=qrn1
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 set pastetoggle=<F3>
+set shiftwidth=4
+set modeline
+filetype plugin on
+syntax on
 command! W w !sudo tee % > /dev/null
 nnoremap  ;  :
 nnoremap  :  ;
