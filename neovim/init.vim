@@ -25,6 +25,10 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tomtom/tcomment_vim'
 " filetypes
     Plug 'satabin/hocon-vim'
+" file explorer
+    Plug 'scrooloose/nerdtree'
+" glow inside neovim, required > 0.4.4
+    Plug 'npxbr/glow.nvim', {'do': ':GlowInstall'}
 
 call plug#end()
 
@@ -125,6 +129,11 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " ======== Plugins settings ========
+" NERDTree {
+    nnoremap <C-g> :NERDTreeToggle<CR>
+    let NERDTreeMinimalUI = 1
+    let NERDTreeDirArrows = 1
+" }
 " Metals {
     inoremap <silent><expr> <TAB>
           \ pumvisible() ? "\<C-n>" :
@@ -239,4 +248,7 @@ nnoremap N Nzzzv
 " Pandoc {
     let g:vim_markdown_toc_autofit = 1
     set conceallevel=2
+" }
+" Glow {
+    nnoremap <C-l> :Glow<CR>
 " }
