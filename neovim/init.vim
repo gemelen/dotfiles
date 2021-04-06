@@ -191,7 +191,15 @@ endif
 "-----------------------------------------------------------------------------
 " completion-nvim settings
 "-----------------------------------------------------------------------------
+" configure type, speed and other characteristics of completion list
+    set completeopt=menuone,noinsert,noselect
+    let g:completion_confirm_key = ""
+    imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
+                     \ "\<Plug>(completion_confirm_completion)"  : "\<c-e>\<CR>" :  "\<CR>"
+    let g:completion_matching_strategy_list = ['fuzzy', 'substring']
+    let g:completion_matching_smart_case = 1
+    let g:completion_timer_cycle = 200
 " Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " }
