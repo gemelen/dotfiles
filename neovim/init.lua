@@ -27,4 +27,4 @@ h.create_augroup({
   { "FileType", "scala,sbt", "lua require('metals').initialize_or_attach(metals_config)" },
   { "FileType", "scala", "setlocal omnifunc=v:lua.vim.lsp.omnifunc" },
   { "BufWritePre", "scala", "lua vim.lsp.buf.formatting()" },
-}, "LSPMEtals")
+}, "LSPMetals")

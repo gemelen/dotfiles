@@ -16,7 +16,7 @@ M.setup_pandoc = function()
     opt("w", "conceallevel", 2)
 end
 --}
---metals {
+-- metals {
 M.setup_metals = function()
   metals_config = require('metals').bare_config
   metals_config.settings = {
@@ -32,17 +32,42 @@ M.setup_metals = function()
   metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
       virtual_text = {
-        prefix = '',
+        prefix = '◈',
       }
     }
   )
 end
---}
+-- }
+-- LSP/Rust {
+M.setup_rust = function()
+    local rust_on_attach = function(client)
+        require('completion').on_attach(client);
+    end
+
+    local lsp_config = require('lspconfig')
+    rust_config = {
+        on_attach = rust_on_attach,
+        settings = {
+            ["rust-analyzer"] = {
+                assist = {
+                    importMergeBehavior = "last",
+                    importPrefix = "by_self",
+                },
+                cargo = { loadOutDirsFromCheck = true },
+                procMacro = { enable = true },
+            }
+        }
+    }
+
+    lsp_config.rust_analyzer.setup(rust_config)
+end
+-- }
 
 M.setup = function()
     M.setup_nerd_tree()
     M.setup_pandoc()
     M.setup_metals()
+    M.setup_rust()
 end
 
 return M

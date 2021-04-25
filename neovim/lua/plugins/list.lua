@@ -10,7 +10,6 @@ return require("packer").startup(function(use)
         use({ "lukas-reineke/indent-blankline.nvim" })
     -- Behaviour
         use({ "nvim-lua/completion-nvim" })
-        use({ "glepnir/lspsaga.nvim" })
         -- file explorer
         use({ "scrooloose/nerdtree" })
         -- better-quick-fix
@@ -33,6 +32,10 @@ return require("packer").startup(function(use)
         -- git
         use({ "tpope/vim-fugitive" })
     -- LSP stuff
+        -- client glue for many languages
+        use({ 'neovim/nvim-lspconfig' })
+        -- virtual windows for LSP functions
+        use({ "glepnir/lspsaga.nvim" })
         -- Scala
         use({ "scalameta/nvim-metals" })
 end)
