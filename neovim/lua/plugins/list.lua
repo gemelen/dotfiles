@@ -16,6 +16,18 @@ return require("packer").startup(function(use)
         use({ "kevinhwang91/nvim-bqf" })
         -- commenting
         use({ "tomtom/tcomment_vim" })
+        -- telescope stuff
+        use({
+            "nvim-telescope/telescope.nvim",
+            requires = {
+                "nvim-lua/popup.nvim",
+                "nvim-lua/plenary.nvim"
+            }
+        })
+        use({
+            "nvim-telescope/telescope-fzf-native.nvim",
+            run = "make"
+        })
     -- filetypes
         -- HOCON
         use({ "satabin/hocon-vim" })
@@ -27,10 +39,16 @@ return require("packer").startup(function(use)
         -- glow inside neovim
         use({
             "npxbr/glow.nvim",
-            run = ":GlowInstall"
+            run = ":GlowInstall",
+            lock = true
         })
         -- git
         use({ "tpope/vim-fugitive" })
+        -- tree-sitter
+        use({
+            "nvim-treesitter/nvim-treesitter",
+            run = ":TSUpdate"
+        })
     -- LSP stuff
         -- client glue for many languages
         use({ 'neovim/nvim-lspconfig' })

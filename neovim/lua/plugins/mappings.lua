@@ -25,11 +25,18 @@ map("n", "]c",          "<cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<
 map("n", "<leader>a",   "<cmd>lua require'metals'.open_all_diagnostics()<CR>", slnr)
 map("n", "<leader>ws",  "<cmd>lua require'metals'.workshiit_hover()<CR>", slnr)
 -- }
--- lspsage {
+-- lspsaga {
 map("n", "K",           "<cmd>lua require('lspsaga.hover').render_hover_doc()<CR>", slnr)
 map("n", "<S-Down>",    "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>", slnr)
 map("n", "<S-Up>",      "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>", slnr)
 map("n", "<leader>ca",  "<cmd>lua require('lspsaga.codeaction').code_action()<CR>", slnr)
 map("v", "<leader>ca",  ":<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>", slnr)
 map("n", "<leader>rn",  "<cmd>lua require('lspsaga.rename').rename()<CR>", slnr)
+-- }
+-- telescope {
+map("n", "<leader>fb",  "<cmd>lua require('telescope.builtin').buffers()<CR>", slnr)
+map("n", "<leader>ff",  "<cmd>lua require('telescope.builtin').find_files()<CR>", slnr)
+map("n", "<leader>fff", "<cmd>lua require('telescope.builtin').find_files({hidden = true})<CR>", slnr)
+map("n", "<leader>fg",  "<cmd>lua require('telescope.builtin').live_grep()<CR>", slnr)
+map("n", "<leader>fq",  "<cmd>lua require('telescope.builtin').quickfix()<CR>", slnr)
 -- }
