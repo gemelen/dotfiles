@@ -6,7 +6,6 @@ return require("packer").startup(function(use)
         -- relative/absolue line numbers
         use({ "myusuf3/numbers.vim" })
         -- visual indentation
-        use({ "Yggdroot/indentLine" })
         use({ "lukas-reineke/indent-blankline.nvim" })
     -- Behaviour
         use({ "nvim-lua/completion-nvim" })
