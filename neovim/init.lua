@@ -18,13 +18,14 @@ require("conf.plugins").setup()     -- load plugin-specific settings
 require("plugins.list")             -- load plugins
 require("plugins.mappings")         -- load plugin-specific mappings
 
-require("lspsaga").init_lsp_saga({
-  server_filetype_map = { metals = { "sbt", "scala" } },
-  code_action_prompt = { virtual_text = false },
-})
-
 h.create_augroup({
   { "FileType", "scala,sbt", "lua require('metals').initialize_or_attach(metals_config)" },
   { "FileType", "scala", "setlocal omnifunc=v:lua.vim.lsp.omnifunc" },
   { "BufWritePre", "scala", "lua vim.lsp.buf.formatting()" },
+  { "CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()" },
+  { "CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()" },
 }, "LSPMetals")
+
+h.create_augroup({
+  { "BufWritePost", "list.lua", "PackerCompile" }
+}, "PackerAutoCompile")

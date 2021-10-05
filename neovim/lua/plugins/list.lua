@@ -51,8 +51,6 @@ return require("packer").startup(function(use)
     -- LSP stuff
         -- client glue for many languages
         use({ 'neovim/nvim-lspconfig' })
-        -- virtual windows for LSP functions
-        use({ "glepnir/lspsaga.nvim" })
         -- Scala
         use({ "scalameta/nvim-metals" })
 end)
