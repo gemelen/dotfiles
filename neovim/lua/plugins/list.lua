@@ -65,4 +65,6 @@ return require("packer").startup(function(use)
         use({ 'neovim/nvim-lspconfig' })
         -- Scala
         use({ "scalameta/nvim-metals" })
+        -- code actions look&feel enhancement
+        use({ "kosayoda/nvim-lightbulb" })
 end)

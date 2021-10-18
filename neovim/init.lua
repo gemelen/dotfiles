@@ -23,8 +23,13 @@ h.create_augroup({
   { "FileType", "scala", "setlocal omnifunc=v:lua.vim.lsp.omnifunc" },
   { "BufWritePre", "scala", "lua vim.lsp.buf.formatting()" },
   { "CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()" },
+  { "BufEnter,CursorHold,InsertLeave", "<buffer>", "lua vim.lsp.codelens.refresh()" },
   { "CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()" },
 }, "LSPMetals")
+
+h.create_augroup({
+  { "CursorHold,CursorHoldI", "*", "lua require('nvim-lightbulb').update_lightbulb()" }
+}, "LSPCodeActions")
 
 h.create_augroup({
   { "BufWritePost", "list.lua", "PackerCompile" }
