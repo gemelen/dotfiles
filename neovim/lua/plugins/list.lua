@@ -8,7 +8,19 @@ return require("packer").startup(function(use)
         -- visual indentation
         use({ "lukas-reineke/indent-blankline.nvim" })
     -- Behaviour
-        use({ "nvim-lua/completion-nvim" })
+        -- completion
+        use({
+            "hrsh7th/nvim-cmp",
+            requires = {
+                "neovim/nvim-lspconfig",
+                "hrsh7th/cmp-nvim-lsp",
+                "hrsh7th/cmp-buffer",
+                -- 🤷
+                -- https://github.com/hrsh7th/nvim-cmp/issues/304#issuecomment-939279715
+                "hrsh7th/cmp-vsnip",
+                "hrsh7th/vim-vsnip"
+            }
+        })
         -- file explorer
         use({ "scrooloose/nerdtree" })
         -- better-quick-fix
