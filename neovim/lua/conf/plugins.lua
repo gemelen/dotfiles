@@ -1,4 +1,5 @@
 local f = require("api.functions")
+local h = require("api.hacks")
 local global = vim.g
 local opt = f.opt
 
@@ -66,6 +67,40 @@ M.setup_metals = function()
       }
     }
   )
+
+
+  h.create_augroup({
+    {
+      "FileType",
+      "scala,sbt",
+      "lua require('metals').initialize_or_attach(metals_config)"
+    },
+    {
+      "FileType",
+      "scala",
+      "setlocal omnifunc=v:lua.vim.lsp.omnifunc"
+    },
+    {
+      "BufWritePre",
+      "scala",
+      "lua vim.lsp.buf.formatting()"
+    },
+    {
+      "CursorHold",
+      "<buffer>",
+      "lua vim.lsp.buf.document_highlight()"
+    },
+    {
+      "BufEnter,CursorHold,InsertLeave",
+      "<buffer>",
+      "lua vim.lsp.codelens.refresh()"
+    },
+    {
+      "CursorMoved",
+      "<buffer>",
+      "lua vim.lsp.buf.clear_references()"
+    },
+  }, "LSPMetals")
 end
 -- }
 -- LSP/Rust {
@@ -119,6 +154,25 @@ M.setup_tree_sitter = function()
     tree_sitter.setup(t_s_config)
 end
 -- }
+-- all not included above {
+M.setup_stuff = function()
+  h.create_augroup({
+    {
+      "CursorHold,CursorHoldI",
+      "*",
+      "lua require('nvim-lightbulb').update_lightbulb()"
+    },
+  }, "LSPCodeActions")
+
+  h.create_augroup({
+    {
+      "BufWritePost",
+      "list.lua",
+      "PackerCompile"
+    }
+  }, "PackerAutoCompile")
+end
+-- }
 M.setup = function()
     M.setup_nerd_tree()
     M.setup_pandoc()
@@ -127,6 +181,7 @@ M.setup = function()
     M.setup_rust()
     M.setup_telescope()
     M.setup_tree_sitter()
+    M.setup_stuff()
 end
 
 return M

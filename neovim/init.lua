@@ -1,7 +1,6 @@
-local h = require("api.hacks")
 local cmd = vim.cmd
-local execute = vim.api.nvim_command
 local fn = vim.fn
+local execute = vim.api.nvim_command
 
 -- autoload Packer if plugin is missing
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -14,23 +13,6 @@ cmd([[packadd packer.nvim]])        -- wbthomason/packer.nvim
 
 require("mappings")                 -- load gemeric mappings
 require("conf.generic")             -- load generic settings
-require("conf.plugins").setup()     -- load plugin-specific settings
 require("plugins.list")             -- load plugins
+require("conf.plugins").setup()     -- load plugin-specific settings
 require("plugins.mappings")         -- load plugin-specific mappings
-
-h.create_augroup({
-  { "FileType", "scala,sbt", "lua require('metals').initialize_or_attach(metals_config)" },
-  { "FileType", "scala", "setlocal omnifunc=v:lua.vim.lsp.omnifunc" },
-  { "BufWritePre", "scala", "lua vim.lsp.buf.formatting()" },
-  { "CursorHold", "<buffer>", "lua vim.lsp.buf.document_highlight()" },
-  { "BufEnter,CursorHold,InsertLeave", "<buffer>", "lua vim.lsp.codelens.refresh()" },
-  { "CursorMoved", "<buffer>", "lua vim.lsp.buf.clear_references()" },
-}, "LSPMetals")
-
-h.create_augroup({
-  { "CursorHold,CursorHoldI", "*", "lua require('nvim-lightbulb').update_lightbulb()" }
-}, "LSPCodeActions")
-
-h.create_augroup({
-  { "BufWritePost", "list.lua", "PackerCompile" }
-}, "PackerAutoCompile")
