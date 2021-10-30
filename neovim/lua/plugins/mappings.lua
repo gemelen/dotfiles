@@ -31,8 +31,8 @@ map("n", "gws",         "<cmd>lua require('telescope.builtin').lsp_workspace_sym
 map("n", "<leader>ca",  "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>", slnr)
 map("n", "<leader>f",   "<cmd>lua require('telescope.builtin').find_files()<CR>", slnr)
 map("n", "<leader>fh",  "<cmd>lua require('telescope.builtin').find_files({hidden = true})<CR>", slnr)
-map("n", "<leader>fb",  "<cmd>lua require('telescope.builtin').buffers()<CR>", slnr)
-map("n", "<leader>fg",  "<cmd>lua require('telescope.builtin').live_grep()<CR>", slnr)
-map("n", "<leader>fq",  "<cmd>lua require('telescope.builtin').quickfix()<CR>", slnr)
+map("n", "<leader>b",   "<cmd>lua require('telescope.builtin').buffers()<CR>", slnr)
+map("n", "<leader>g",   "<cmd>lua require('telescope.builtin').live_grep()<CR>", slnr)
+map("n", "<leader>q",   "<cmd>lua require('telescope.builtin').quickfix()<CR>", slnr)
 map("n", "mc",          "<cmd>lua require('telescope').extensions.metals.commands()<CR>", slnr)
 -- }
