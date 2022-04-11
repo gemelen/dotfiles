@@ -2,39 +2,28 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 
+alias l="ls -lAhG"
+
 bindkey -e
 bindkey '^R' history-incremental-search-backward
 
-zstyle :compinstall filename '/home/gemelen/.zshrc'
+if type brew &>/dev/null; then
+    brewfpath=$(brew --prefix)/share/zsh/site-functions
+fi
 
-autoload -Uz compinit
+zstyle :compinstall filename '/home/gemelen/.zshrc'
+zstyle ':vcs_info:git:*' formats '%b'
+
+autoload -Uz compinit && compinit
 autoload -U promptinit
+autoload -Uz vcs_info
 autoload colors
 
-compinit
 setopt prompt_subst
 
 precmd() {
-    PROMPT="%m %~ %(#.#.>) "
+    vcs_info
+    PROMPT="%m %~ %K{cyan}${vcs_info_msg_0_}%k%(#.#.>) "
 }
 
-getmetals() {
-    if [ -n "$1" ]
-    then
-        coursier bootstrap \
-          --java-opt -XX:+UseG1GC \
-          --java-opt -XX:+UseStringDeduplication  \
-          --java-opt -Xss4m \
-          --java-opt -Xms100m \
-          --java-opt -Dmetals.client=vim-lsc \
-          org.scalameta:metals_2.12:$1 \
-          -r bintray:scalacenter/releases \
-          -r sonatype:releases \
-          -r sonatype:snapshots \
-          -o ${HOME}/bin/metals-vim -f
-    fi
-}
-
-alias l="ls -lAh --color=auto"
-alias 2html="vim -n -c ':so $VIMRUNTIME/syntax/2html.vim' -c ':wqa $1.html' $1 > /dev/null 2> /dev/null" 
-
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
