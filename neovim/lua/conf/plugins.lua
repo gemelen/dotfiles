@@ -188,6 +188,7 @@ M.setup_telescope = function()
     }
     telescope.setup(extensions_config)
     telescope.load_extension('fzf')
+    telescope.load_extension('scaladex')
 end
 -- }
 -- Tree-sitter {

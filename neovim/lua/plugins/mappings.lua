@@ -35,4 +35,5 @@ map("n", "<leader>b",   "<cmd>lua require('telescope.builtin').buffers()<CR>", s
 map("n", "<leader>g",   "<cmd>lua require('telescope.builtin').live_grep()<CR>", slnr)
 map("n", "<leader>q",   "<cmd>lua require('telescope.builtin').quickfix()<CR>", slnr)
 map("n", "mc",          "<cmd>lua require('telescope').extensions.metals.commands()<CR>", slnr)
+map("n", "sd",          "<cmd>lua require('telescope').extensions.scaladex.scaladex.search()<CR>", slnr)
 -- }

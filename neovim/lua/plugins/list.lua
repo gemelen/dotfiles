@@ -35,9 +35,19 @@ return require("packer").startup(function(use)
                 "nvim-lua/plenary.nvim"
             }
         })
+        -- telescope extensions
         use({
             "nvim-telescope/telescope-fzf-native.nvim",
-            run = "make"
+            run = "make",
+            requires = {
+                "nvim-telescope/telescope.nvim"
+            }
+        })
+        use({
+            "softinio/scaladex.nvim",
+            requires = {
+                "nvim-telescope/telescope.nvim"
+            }
         })
     -- filetypes
         -- HOCON
