@@ -1,5 +1,5 @@
 local f = require("api.functions")
-local h = require("api.hacks")
+local api = vim.api
 local global = vim.g
 local fn = vim.fn
 local opt = f.opt
@@ -69,39 +69,58 @@ M.setup_metals = function()
     }
   )
 
+  api.nvim_create_augroup("LSPMetals", {})
+  api.nvim_create_autocmd(
+    "FileType",
+    { 
+      group = "LSPMetals", 
+      desc = "Metals initialization for a file", 
+      pattern = {"scala", "sbt"}, 
+      command = "lua require('metals').initialize_or_attach(metals_config)"
+    }
+  )
+  api.nvim_create_autocmd(
+    "FileType",
+    {
+      group = "LSPMetals",
+      desc = "Attach Metals completion function",
+      pattern = {"scala"},
+      command = "setlocal omnifunc=v:lua.vim.lsp.omnifunc"
+    }
+  )
+  api.nvim_create_autocmd(
+    "BufWritePre",
+    {
+      group = "LSPMetals",
+      pattern = {"*.scala"}, -- double check if pattern is correct
+      command = "lua vim.lsp.buf.formatting()"
+    }
+  )
+  api.nvim_create_autocmd(
+    "CursorHold",
+    {
+      group = "LSPMetals",
+      pattern = "<buffer>",
+      command = "lua vim.lsp.buf.document_highlight()"
+    }
+  )
+  api.nvim_create_autocmd(
+    {"BufEnter, CursorHold, InsertLeave"},
+    {
+      group = "LSPMetals",
+      pattern = "<buffer>",
+      command = "lua vim.lsp.codelens.refresh()"
+    }
+  )
+  api.nvim_create_autocmd(
+    "CursorMoved",
+    {
+      group = "LSPMetals",
+      pattern = "<buffer>",
+      command = "lua vim.lsp.buf.clear_references()"
+    }
+  )
 
-  h.create_augroup({
-    {
-      "FileType",
-      "scala,sbt",
-      "lua require('metals').initialize_or_attach(metals_config)"
-    },
-    {
-      "FileType",
-      "scala",
-      "setlocal omnifunc=v:lua.vim.lsp.omnifunc"
-    },
-    {
-      "BufWritePre",
-      "scala",
-      "lua vim.lsp.buf.formatting()"
-    },
-    {
-      "CursorHold",
-      "<buffer>",
-      "lua vim.lsp.buf.document_highlight()"
-    },
-    {
-      "BufEnter,CursorHold,InsertLeave",
-      "<buffer>",
-      "lua vim.lsp.codelens.refresh()"
-    },
-    {
-      "CursorMoved",
-      "<buffer>",
-      "lua vim.lsp.buf.clear_references()"
-    },
-  }, "LSPMetals")
 end
 -- }
 -- LSP/Rust {
@@ -175,18 +194,25 @@ M.setup_java = function()
 
   vim.lsp.handlers['language/status'] = function() end
 
-  h.create_augroup({
+  api.nvim_create_augroup("LSPJava", {})
+  api.nvim_create_autocmd(
+    "FileType",
     {
-        "BufReadPre",
-        "pom.xml",
-        "setlocal filetype=java"
-    },
-    {
-        "FileType",
-        "java",
-        "lua require('jdtls').start_or_attach(jdtls_config)"
+      group = "LSPJava",
+      desc = "JDTLS initialization for a file",
+      pattern = "java",
+      command = "lua require('jdtls').start_or_attach(jdtls_config)"
     }
-  }, "LSPJava")
+  )
+  api.nvim_create_autocmd(
+    "BufReadPre",
+    {
+      group = "LSPJava",
+      desc = "Assign 'java' filetype to pom.xml file",
+      pattern = "pom.xml",
+      command = "setlocal filetype=java"
+    }
+  )
 end
 -- }
 -- LSP/Python {
@@ -230,21 +256,22 @@ end
 -- }
 -- all not included above {
 M.setup_stuff = function()
-  h.create_augroup({
+  api.nvim_create_autocmd(
+    {"CursorHold", "CursorHoldI"},
     {
-      "CursorHold,CursorHoldI",
-      "*",
-      "lua require('nvim-lightbulb').update_lightbulb()"
-    },
-  }, "LSPCodeActions")
-
-  h.create_augroup({
-    {
-      "BufWritePost",
-      "list.lua",
-      "PackerCompile"
+      desc = "Attach lightbulb plugin",
+      pattern = "*",
+      command = "lua require('nvim-lightbulb').update_lightbulb()"
     }
-  }, "PackerAutoCompile")
+  )
+  api.nvim_create_autocmd(
+    "BufWritePost",
+    {
+      desc = "Run packer compile every time list of plugins changed",
+      pattern = "plugins/list.lua",
+      command = "PackerCompile"
+    }
+  )
 end
 -- }
 M.setup = function()
