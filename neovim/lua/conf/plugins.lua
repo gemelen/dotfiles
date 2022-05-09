@@ -189,6 +189,11 @@ M.setup_java = function()
   }, "LSPJava")
 end
 -- }
+-- LSP/Python {
+M.setup_python = function()
+    require'lspconfig'.pyright.setup{}
+end
+-- }
 -- Telescope {
 M.setup_telescope = function()
     local telescope = require('telescope')
@@ -249,6 +254,7 @@ M.setup = function()
     M.setup_metals()
     M.setup_rust()
     M.setup_java()
+    M.setup_python()
     M.setup_telescope()
     M.setup_tree_sitter()
     M.setup_stuff()
