@@ -251,6 +251,7 @@ M.setup = function()
     M.setup_java()
     M.setup_telescope()
     M.setup_tree_sitter()
+    M.setup_stuff()
 end
 
 return M
