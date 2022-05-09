@@ -1,85 +1,46 @@
 servers = (
-  {
-    address = "leguin.freenode.net";
-    chatnet = "freenode";
-    port = "6697";
-    use_ssl = "yes";
-    ssl_verify = "yes";
-    autoconnect = "yes";
-    password = "CHANGE-ME";
-  },
-  {
-    address = "adams.freenode.net";
-    chatnet = "freenode";
-    port = "6697";
-    use_ssl = "yes";
-    ssl_verify = "yes";
-    password = "CHANGE-ME";
-  },
-  {
-    address = "gibson.freenode.net";
-    chatnet = "freenode";
-    port = "6697";
-    use_ssl = "yes";
-    ssl_verify = "yes";
-    password = "CHANGE-ME";
-  },
-  {
-    address = "holmes.freenode.net";
-    chatnet = "freenode";
-    port = "6697";
-    use_ssl = "yes";
-    ssl_verify = "yes";
-    password = "CHANGE-ME";
-  },
-  {
-    address = "pratchett.freenode.net";
-    chatnet = "freenode";
-    port = "6697";
-    use_ssl = "yes";
-    ssl_verify = "yes";
-    password = "CHANGE-ME";
-  },
-  {
-    address = "irc.lucky.net";
-    chatnet = "RusNet";
-    port = "7777";
-  },
-  { address = "irc.tambov.ru"; 
-    chatnet = "RusNet"; 
-    port = "7770"; 
-  }
+    # libera
+  { address = "irc.libera.chat"; chatnet = "libera"; port = "6697"; use_ssl = "yes"; ssl_verify = "yes"; autoconnect = "yes"; password = "CHANGE-ME"; }
+    # freenode
+  { address = "leguin.freenode.net"; chatnet = "freenode"; port = "6697"; use_ssl = "yes"; ssl_verify = "yes"; password = "CHANGE-ME"; },
+  { address = "adams.freenode.net"; chatnet = "freenode"; port = "6697"; use_ssl = "yes"; ssl_verify = "yes"; password = "CHANGE-ME"; },
+  { address = "gibson.freenode.net"; chatnet = "freenode"; port = "6697"; use_ssl = "yes"; ssl_verify = "yes"; password = "CHANGE-ME"; },
+  { address = "holmes.freenode.net"; chatnet = "freenode"; port = "6697"; use_ssl = "yes"; ssl_verify = "yes"; password = "CHANGE-ME"; },
+  { address = "pratchett.freenode.net"; chatnet = "freenode"; port = "6697"; use_ssl = "yes"; ssl_verify = "yes"; password = "CHANGE-ME"; },
+    # rusnet
+  { address = "irc.lucky.net"; chatnet = "RusNet"; port = "7777"; },
+  { address = "irc.tambov.ru"; chatnet = "RusNet"; port = "7770"; },
 );
 
 chatnets = {
+  libera = {
+    type = "IRC"; max_kicks = "3"; max_msgs = "3"; max_whos = "3"; max_query_chans = "5";
+  };
   RusNet = {
-    type = "IRC";
-    autosendcmd = "/^quote NickServ IDENTIFY CHANGE-ME; wait 2000";
-    max_kicks = "3";
-    max_msgs = "3";
-    max_whos = "3";
-    max_query_chans = "5";
+    type = "IRC"; autosendcmd = "/^quote NickServ IDENTIFY CHANGE-ME; wait 2000"; max_kicks = "3"; max_msgs = "3"; max_whos = "3"; max_query_chans = "5";
   };
   freenode = {
-    type = "IRC";
-    max_kicks = "3";
-    max_msgs = "3";
-    max_whos = "3";
-    max_query_chans = "5";
+    type = "IRC"; max_kicks = "3"; max_msgs = "3"; max_whos = "3"; max_query_chans = "5";
   };
 };
 
 channels = (
-  # RusNet
+    # libera
+  { name = "#scala"; chatnet = "libera"; autojoin = "yes"; },
+  { name = "#smartos"; chatnet = "libera"; autojoin = "yes"; },
+  { name = "#rust"; chatnet = "libera"; autojoin = "yes"; },
+  { name = "#neovim"; chatnet = "libera"; autojoin = "yes"; }
+    # RusNet
   { name = "#c"; chatnet = "RusNet"; autojoin = "yes"; },
   { name = "#fiona"; chatnet = "RusNet"; autojoin = "yes"; },
   { name = "#freebsd"; chatnet = "RusNet"; autojoin = "yes"; },
-  # fredenode
+    # fredenode
   { name = "#scala"; chatnet = "freenode"; autojoin = "yes"; },
   { name = "#smartos"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#ovh"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "##rust"; chatnet = "freenode"; autojoin = "yes"; },
   { name = "#vim"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "##c"; chatnet = "freenode"; autojoin = "yes"; }
+  { name = "##c"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#neovim"; chatnet = "freenode"; autojoin = "yes"; },
 );
 
 aliases = {
@@ -136,6 +97,7 @@ aliases = {
   hopme = "eval quote chanserv halfop $C $N";
   dehopme = "eval quote chanserv dehalfop $C $N";
   cs = "quote chanserv";
+  ns = "quote nickserv";
 };
 
 statusbar = {
@@ -264,9 +226,7 @@ settings = {
   "irc/core" = { part_message = "..."; };
 };
 logs = { };
-ignores = (
-  { level = "JOINS PARTS QUITS"; }
-);
+ignores = ( { level = "JOINS PARTS QUITS"; } );
 conversions = { "freenode/#altlinux" = "koi8-r"; };
 hilights = (
   { text = "gemelen"; nick = "yes"; word = "yes"; },
@@ -276,54 +236,31 @@ windows = {
   1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
   2 = {
     items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#scala";
-        tag = "freenode";
-      }
+      { type = "CHANNEL"; chat_type = "IRC"; name = "#scala"; tag = "libera"; }
     );
   };
   3 = {
     items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#ovh";
-        tag = "freenode";
-      }
+      { type = "CHANNEL"; chat_type = "IRC"; name = "#smartos"; tag = "libera"; }
     );
   };
   4 = {
     items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#smartos";
-        tag = "freenode";
-      }
+      { type = "CHANNEL"; chat_type = "IRC"; name = "#rust"; tag = "libera"; }
     );
   };
   5 = {
     items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#vim";
-        tag = "freenode";
-      }
+      { type = "CHANNEL"; chat_type = "IRC"; name = "#neovim"; tag = "libera"; }
     );
   };
-  6 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "##C";
-        tag = "freenode";
-      }
-    );
-  };
-  11 = { name = "paste"; };
+  6 = { name = "paste"; };
 };
-mainwindows = { 9 = { first_line = "1"; lines = "50"; }; };
+mainwindows = {
+  1 = { 
+    first_line = "1";
+    lines = "50";
+    first_column = "0";
+    columns = "191";
+  };
+};
