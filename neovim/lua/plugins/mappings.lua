@@ -18,6 +18,7 @@ map("n", "K",           "<cmd>lua vim.lsp.buf.hover()<CR>", slnr)
 map("n", "sh",          "<cmd>lua vim.lsp.buf.signature_help()<CR>", slnr)
 map("n", "<leader>rn",  "<cmd>lua vim.lsp.buf.rename()<CR>", slnr)
 map("n", "<leader>t",   "<cmd>lua vim.lsp.buf.formatting()<CR>", slnr)
+map("n", "<leader>ca",  "<cmd>lua vim.lsp.buf.code_action()<CR>", slnr)
 map("n", "<leader>cl",  "<cmd>lua vim.lsp.codelens.run()<CR>", slnr)
 -- }
 -- metals {
@@ -28,7 +29,6 @@ map("n", "<leader>tr",  "<cmd>lua require('metals.tvp').reveal_in_tree()<CR>", s
 -- telescope {
 map("n", "gds",         "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", slnr)
 map("n", "gws",         "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", slnr)
-map("n", "<leader>ca",  "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>", slnr)
 map("n", "<leader>f",   "<cmd>lua require('telescope.builtin').find_files()<CR>", slnr)
 map("n", "<leader>fh",  "<cmd>lua require('telescope.builtin').find_files({hidden = true})<CR>", slnr)
 map("n", "<leader>b",   "<cmd>lua require('telescope.builtin').buffers()<CR>", slnr)

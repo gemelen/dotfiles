@@ -49,6 +49,12 @@ return require("packer").startup(function(use)
                 "nvim-telescope/telescope.nvim"
             }
         })
+        use({
+            "nvim-telescope/telescope-ui-select.nvim",
+            requires = {
+                "nvim-telescope/telescope.nvim"
+            }
+        })
     -- filetypes
         -- HOCON
         use({ "satabin/hocon-vim" })

@@ -199,12 +199,16 @@ M.setup_telescope = function()
                 override_generic_sorter = false,
                 override_file_sorter = true,
                 case_mode = "smart_case",
+            },
+            ["ui-select"] = {
+                require("telescope.themes").get_dropdown {}
             }
         }
     }
     telescope.setup(extensions_config)
     telescope.load_extension('fzf')
     telescope.load_extension('scaladex')
+    telescope.load_extension('ui-select')
 end
 -- }
 -- Tree-sitter {
