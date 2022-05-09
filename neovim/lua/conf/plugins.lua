@@ -1,6 +1,7 @@
 local f = require("api.functions")
 local h = require("api.hacks")
 local global = vim.g
+local fn = vim.fn
 local opt = f.opt
 
 local M = {}
@@ -23,7 +24,7 @@ M.setup_cmp = function()
     cmp_config = {
         snippet = {
             expand = function(args)
-                vim.fn["vsnip#anonymous"](args.body)
+                fn["vsnip#anonymous"](args.body)
             end,
         },
         mapping = {
@@ -127,9 +128,22 @@ end
 -- }
 -- LSP/Java {
 M.setup_java = function()
-    local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+    local project_name = fn.fnamemodify(fn.getcwd(), ':p:h:t')
     local workspace_dir = '/tmp/jdtls-workspace/' .. project_name
-    -- TODO: configure to work both on linux and macos
+    -- update is required if JDTLS changed/upgraded
+    local jdtls_path_macos = '/usr/local/Cellar/jdtls/1.9.0-202203031534/libexec'
+    local jdtls_path_linux = '$HOME/bin/jdt-ls/latest'
+    local launcher_plugin_path = '/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar'
+    -- MacOS as a special case and Linux as "all others"
+    local function launcher_paths ()
+        if vim.loop.os_uname().sysname == 'Darwin' then 
+            return (jdtls_path_macos .. launcher_plugin_path), (jdtls_path_macos .. '/config_mac')
+        else 
+            return (fn.expand(jdtls_path_linux .. launcher_plugin_path)), (fn.expand(jdtls_path_linux .. '/config_linux'))
+        end
+    end
+
+    local jar, jdtlscfg = launcher_paths()
     jdtls_config = {
       cmd = {
         'java',
@@ -142,13 +156,8 @@ M.setup_java = function()
         '--add-modules=ALL-SYSTEM',
         '--add-opens', 'java.base/java.util=ALL-UNNAMED',
         '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-
-        -- version and path dependend, UPDATE this
-        '-jar', '/usr/local/Cellar/jdtls/1.9.0-202203031534/libexec/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar',
-
-        -- version and path dependend, UPDATE this
-        '-configuration', '/usr/local/Cellar/jdtls/1.9.0-202203031534/libexec/config_mac',
-
+        '-jar', jar,
+        '-configuration', jdtlscfg,
         '-data', workspace_dir
       },
 
@@ -164,7 +173,14 @@ M.setup_java = function()
       },
     }
 
+  vim.lsp.handlers['language/status'] = function() end
+
   h.create_augroup({
+    {
+        "BufReadPre",
+        "pom.xml",
+        "setlocal filetype=java"
+    },
     {
         "FileType",
         "java",
