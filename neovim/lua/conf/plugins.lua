@@ -150,7 +150,7 @@ M.setup_java = function()
     local project_name = fn.fnamemodify(fn.getcwd(), ':p:h:t')
     local workspace_dir = '/tmp/jdtls-workspace/' .. project_name
     -- update is required if JDTLS changed/upgraded
-    local jdtls_path_macos = '/usr/local/Cellar/jdtls/1.9.0-202203031534/libexec'
+    local jdtls_path_macos = '/usr/local/Cellar/jdtls/1.11.0/libexec'
     local jdtls_path_linux = '$HOME/bin/jdt-ls/latest'
     local launcher_plugin_path = '/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar'
     -- MacOS as a special case and Linux as "all others"
