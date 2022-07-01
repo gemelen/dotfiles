@@ -15,6 +15,8 @@ map("", "<Right>", ":vertical resize -2<CR>", { noremap = true, silent = true })
 ---- Swap : and ; to make colon commands easier to type
 map("n", ";", ":", { noremap = true, silent = false, nowait = true })
 map("n", ":", ";", { noremap = true, silent = false, nowait = true })
+map("v", ";", ":", { noremap = true, silent = false, nowait = true })
+map("v", ":", ";", { noremap = true, silent = false, nowait = true })
 ---- Keep search matches in the middle of a window
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
