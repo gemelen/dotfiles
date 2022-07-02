@@ -51,8 +51,6 @@ return require("packer").startup(function(use)
             requires = { "nvim-telescope/telescope.nvim" }
         })
     -- filetypes
-        -- HOCON
-        use({ "satabin/hocon-vim" })
         -- pandoc
         use({ "vim-pandoc/vim-pandoc-syntax" })
     -- Tools
