@@ -76,6 +76,8 @@ return require("packer").startup(function(use)
         use({ "scalameta/nvim-metals" })
         -- Java
         use({ "mfussenegger/nvim-jdtls" })
+        -- another code actions plugin
+        use({ "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" })
         -- code actions look&feel enhancement
         use({ "kosayoda/nvim-lightbulb" })
 end)

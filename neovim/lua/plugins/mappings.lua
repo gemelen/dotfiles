@@ -19,6 +19,7 @@ map("n", "sh",          "<cmd>lua vim.lsp.buf.signature_help()<CR>", slnr)
 map("n", "<leader>rn",  "<cmd>lua vim.lsp.buf.rename()<CR>", slnr)
 map("n", "<leader>t",   "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", slnr)
 map("n", "<leader>ca",  "<cmd>lua vim.lsp.buf.code_action()<CR>", slnr)
+map("n", "<leader>ka",  ":CodeActionMenu<CR>", slnr)
 map("n", "<leader>cl",  "<cmd>lua vim.lsp.codelens.run()<CR>", slnr)
 -- }
 -- metals {
