@@ -12,6 +12,11 @@ M.setup_nerd_tree = function()
     global["NERDTreeDirArrows"] = 1
 end
 -- }
+-- neotree {
+M.setup_neo_tree = function()
+    global["neo_tree_remove_legacy_commands"] = 1
+end
+-- }
 -- Pandoc {
 M.setup_pandoc = function()
     global["vim_markdown_toc_autofit"] = 1
@@ -253,7 +258,7 @@ M.setup_tree_sitter = function()
         },
         highlight = {
             enable = true
-        }
+        },
     }
     tree_sitter.setup(t_s_config)
 end
@@ -280,6 +285,7 @@ end
 -- }
 M.setup = function()
     M.setup_nerd_tree()
+    M.setup_neo_tree()
     M.setup_pandoc()
     M.setup_cmp()
     M.setup_metals()

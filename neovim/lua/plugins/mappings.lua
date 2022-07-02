@@ -5,7 +5,10 @@ local nr = { noremap = true }
 local slnr = { silent = true, noremap = true }
 
 -- NERDTree {
-map("n", "<C-g>", ":NERDTreeToggle<CR>", nr)
+-- map("n", "<C-g>", ":NERDTreeToggle<CR>", nr)
+-- }
+-- Neo-tree {
+map("n", "<C-g>", ":Neotree toggle<CR>", nr)
 -- }
 -- glow {
 map("n", "<C-l>", ":Glow<CR>", nr)

@@ -22,8 +22,17 @@ return require("packer").startup(function(use)
                 "hrsh7th/vim-vsnip"
             }
         })
-        -- file explorer
+        -- file browser
         use({ "scrooloose/nerdtree" })
+        use({
+          "nvim-neo-tree/neo-tree.nvim",
+            branch = "v2.x",
+            requires = { 
+              "nvim-lua/plenary.nvim",
+              "kyazdani42/nvim-web-devicons",
+              "MunifTanjim/nui.nvim",
+            }
+        })
         -- better-quick-fix
         use({ "kevinhwang91/nvim-bqf" })
         -- commenting
