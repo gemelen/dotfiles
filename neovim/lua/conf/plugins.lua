@@ -246,7 +246,11 @@ end
 M.setup_tree_sitter = function()
     local tree_sitter = require('nvim-treesitter.configs')
     t_s_config = {
-        ensure_installed = {"bash", "dockerfile", "java", "lua", "rust", "scala", "yaml", "python"},
+        ensure_installed = {
+            "java", "python", "rust", "scala",
+            "dockerfile", "hocon", "json", "yaml",
+            "bash", "lua"
+        },
         highlight = {
             enable = true
         }
