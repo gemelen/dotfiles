@@ -2,6 +2,7 @@ return require("packer").startup(function(use)
     -- plugin manager
         use({ "wbthomason/packer.nvim" })
     -- Look and feel
+        -- unmaintained, replace with EvitanRelta/vim-colorschemes if required
         use({ "flazz/vim-colorschemes" })
         -- relative/absolue line numbers
         use({ "myusuf3/numbers.vim" })
@@ -39,21 +40,15 @@ return require("packer").startup(function(use)
         use({
             "nvim-telescope/telescope-fzf-native.nvim",
             run = "make",
-            requires = {
-                "nvim-telescope/telescope.nvim"
-            }
+            requires = { "nvim-telescope/telescope.nvim" }
         })
         use({
             "softinio/scaladex.nvim",
-            requires = {
-                "nvim-telescope/telescope.nvim"
-            }
+            requires = { "nvim-telescope/telescope.nvim" }
         })
         use({
             "nvim-telescope/telescope-ui-select.nvim",
-            requires = {
-                "nvim-telescope/telescope.nvim"
-            }
+            requires = { "nvim-telescope/telescope.nvim" }
         })
     -- filetypes
         -- HOCON
