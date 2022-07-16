@@ -21,3 +21,7 @@ map("v", ":", ";", { noremap = true, silent = false, nowait = true })
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 -- }
+-- Remap indentation-aware pasting {
+map("n", "qp", "]p", { noremap = true, silent = false, nowait = true })
+map("n", "qP", "[p", { noremap = true, silent = false, nowait = true })
+-- }
