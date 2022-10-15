@@ -63,8 +63,7 @@ M.setup_metals = function()
   metals_config.init_options.statusBarProvider = "on"
 
   -- add completion
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  metals_config.capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+  metals_config.capabilities = require('cmp_nvim_lsp').default_capabilities()
 
   metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -134,7 +133,7 @@ M.setup_rust = function()
     local lsp_config = require('lspconfig')
     rust_config = {
         -- add completion
-        capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities),
+        capabilities = require('cmp_nvim_lsp').default_capabilities(),
         settings = {
             ["rust-analyzer"] = {
                 assist = {
