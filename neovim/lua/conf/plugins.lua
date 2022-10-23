@@ -136,11 +136,14 @@ M.setup_rust = function()
         capabilities = require('cmp_nvim_lsp').default_capabilities(),
         settings = {
             ["rust-analyzer"] = {
-                assist = {
-                    importMergeBehavior = "last",
-                    importPrefix = "by_self",
+                imports = {
+                    granularity = { group = "module", },
+                    prefix = "self",
                 },
-                cargo = { loadOutDirsFromCheck = true },
+                cargo = { 
+                    buildScripts = { enable = true, },
+                    loadOutDirsFromCheck = true 
+                },
                 procMacro = { enable = true },
             }
         }
