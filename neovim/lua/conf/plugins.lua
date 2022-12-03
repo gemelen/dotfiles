@@ -227,11 +227,6 @@ M.setup_python = function()
     require'lspconfig'.pyright.setup{}
 end
 -- }
--- LSP/OCaml {
-M.setup_ocaml = function()
-    require('lspconfig').ocamllsp.setup{}
-end
--- }
 -- Telescope {
 M.setup_telescope = function()
     local telescope = require('telescope')
@@ -299,7 +294,6 @@ M.setup = function()
     M.setup_rust()
     M.setup_java()
     M.setup_python()
-    M.setup_ocaml()
     M.setup_telescope()
     M.setup_tree_sitter()
     M.setup_stuff()
