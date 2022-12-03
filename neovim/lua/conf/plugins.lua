@@ -227,6 +227,13 @@ M.setup_python = function()
     require'lspconfig'.pyright.setup{}
 end
 -- }
+-- LST/Elixir {
+M.setup_elixir = function()
+    require('lspconfig').elixirls.setup{
+        cmd = { fn.expand("~/bin/elixir-ls/latest/language_server.sh") }
+    }
+end
+-- }
 -- Telescope {
 M.setup_telescope = function()
     local telescope = require('telescope')
@@ -255,6 +262,7 @@ M.setup_tree_sitter = function()
     t_s_config = {
         ensure_installed = {
             "java", "python", "rust", "scala",
+            "elixir", "heex", "eex",
             "dockerfile", "hocon", "json", "yaml",
             "bash", "lua"
         },
@@ -294,6 +302,7 @@ M.setup = function()
     M.setup_rust()
     M.setup_java()
     M.setup_python()
+    M.setup_elixir()
     M.setup_telescope()
     M.setup_tree_sitter()
     M.setup_stuff()
