@@ -97,7 +97,7 @@ M.setup_metals = function()
     {
       group = "LSPMetals",
       pattern = {"*.scala"}, -- double check if pattern is correct
-      command = "lua vim.lsp.buf.formatting()"
+      command = "lua vim.lsp.buf.format()"
     }
   )
   api.nvim_create_autocmd(
