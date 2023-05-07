@@ -25,7 +25,6 @@ return require("packer").startup(function(use)
             }
         })
         -- file browser
-        use({ "scrooloose/nerdtree" })
         use({
           "nvim-neo-tree/neo-tree.nvim",
             branch = "v2.x",

@@ -6,12 +6,6 @@ local opt = f.opt
 
 local M = {}
 
--- NERDTree {
-M.setup_nerd_tree = function()
-    global["NERDTreeMinimalUI"] = 1
-    global["NERDTreeDirArrows"] = 1
-end
--- }
 -- neotree {
 M.setup_neo_tree = function()
     global["neo_tree_remove_legacy_commands"] = 1
@@ -300,7 +294,6 @@ M.setup_stuff = function()
 end
 -- }
 M.setup = function()
-    M.setup_nerd_tree()
     M.setup_neo_tree()
     M.setup_pandoc()
     M.setup_cmp()
