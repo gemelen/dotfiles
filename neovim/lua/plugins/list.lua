@@ -80,6 +80,15 @@ return require("packer").startup(function(use)
             "nvim-treesitter/nvim-treesitter",
             run = ":TSUpdate"
         })
+    -- hotkey help
+        use({
+            "sudormrfbin/cheatsheet.nvim",
+            requires = {
+                {'nvim-telescope/telescope.nvim'},
+                {'nvim-lua/popup.nvim'},
+                {'nvim-lua/plenary.nvim'},
+            }
+        })
     -- LSP stuff
         -- client glue for many languages
         use({ 'neovim/nvim-lspconfig' })
