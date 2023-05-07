@@ -255,10 +255,9 @@ M.setup_tree_sitter = function()
     local tree_sitter = require('nvim-treesitter.configs')
     t_s_config = {
         ensure_installed = {
-            "java", "python", "rust", "scala",
-            "elixir", "heex", "eex",
-            "dockerfile", "hocon", "json", "yaml",
-            "bash", "lua"
+            "java", "python", "rust", "scala", "lua", "bash",
+            "dockerfile", "hocon", "json", "yaml", "toml", "comment", "regex",
+            "sql"
         },
         highlight = {
             enable = true
