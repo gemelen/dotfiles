@@ -41,3 +41,6 @@ map("n", "<leader>q",   "<cmd>lua require('telescope.builtin').quickfix()<CR>", 
 map("n", "mc",          "<cmd>lua require('telescope').extensions.metals.commands()<CR>", slnr)
 map("n", "sd",          "<cmd>lua require('telescope').extensions.scaladex.scaladex.search()<CR>", slnr)
 -- }
+-- lsp_lines {
+map("n", "<leader>z",   "<cmd>lua require('lsp_lines').toggle()<CR>", slnr)
+-- }

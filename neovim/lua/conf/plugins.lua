@@ -273,6 +273,12 @@ M.setup_tree_sitter = function()
     tree_sitter.setup(t_s_config)
 end
 -- }
+-- virtual lines {
+M.setup_virtual_lines = function()
+    vim.diagnostic.config({ virtual_text = false, })
+    require('lsp_lines').setup()
+end
+-- }
 -- all not included above {
 M.setup_stuff = function()
   api.nvim_create_autocmd(
@@ -305,6 +311,7 @@ M.setup = function()
     M.setup_elixir()
     M.setup_telescope()
     M.setup_tree_sitter()
+    M.setup_virtual_lines()
     M.setup_stuff()
 end
 

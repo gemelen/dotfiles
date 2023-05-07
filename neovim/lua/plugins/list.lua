@@ -8,6 +8,8 @@ return require("packer").startup(function(use)
         use({ "myusuf3/numbers.vim" })
         -- visual indentation
         use({ "lukas-reineke/indent-blankline.nvim" })
+        -- LSP virtual lines
+        use({ "https://git.sr.ht/~whynothugo/lsp_lines.nvim" })
     -- Behaviour
         -- completion
         use({
