@@ -91,6 +91,9 @@ return require("packer").startup(function(use)
     -- LSP stuff
         -- client glue for many languages
         use({ 'neovim/nvim-lspconfig' })
+        -- Mason
+        use({ 'williamboman/mason.nvim' })
+        use({ 'williamboman/mason-lspconfig.nvim' })
         -- Scala
         use({ "scalameta/nvim-metals" })
         -- Java
