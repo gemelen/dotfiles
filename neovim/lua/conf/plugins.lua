@@ -419,6 +419,12 @@ M.setup_tree_sitter = function()
     tree_sitter.setup(t_s_config)
 end
 -- }
+-- Terraform {
+M.setup_terraform = function()
+    require('lspconfig').terraformls.setup{}
+    require('lspconfig').tflint.setup{}
+end
+-- }
 -- virtual lines {
 M.setup_virtual_lines = function()
     vim.diagnostic.config({ virtual_text = false, })
@@ -455,6 +461,7 @@ M.setup = function()
     M.setup_ember_with_mason()
     M.setup_telescope()
     M.setup_tree_sitter()
+    M.setup_terraform()
     M.setup_virtual_lines()
     M.setup_stuff()
 end
