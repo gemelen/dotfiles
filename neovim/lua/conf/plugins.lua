@@ -423,6 +423,15 @@ end
 M.setup_terraform = function()
     require('lspconfig').terraformls.setup{}
     require('lspconfig').tflint.setup{}
+
+    vim.api.nvim_create_autocmd(
+      "BufWritePre",
+      {
+        group = "LSPTerraform",
+        pattern = {"*.tf", "*.tfvars"},
+        callback = vim.lsp.buf.formatting_sync(),
+      }
+    )
 end
 -- }
 -- virtual lines {
