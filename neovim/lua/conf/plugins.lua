@@ -121,31 +121,6 @@ M.setup_metals = function()
 
 end
 -- }
--- LSP/Rust {
-M.setup_rust = function()
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    local lsp_config = require('lspconfig')
-    rust_config = {
-        -- add completion
-        capabilities = require('cmp_nvim_lsp').default_capabilities(),
-        settings = {
-            ["rust-analyzer"] = {
-                imports = {
-                    granularity = { group = "module", },
-                    prefix = "self",
-                },
-                cargo = { 
-                    buildScripts = { enable = true, },
-                    loadOutDirsFromCheck = true 
-                },
-                procMacro = { enable = true },
-            }
-        }
-    }
-
-    lsp_config.rust_analyzer.setup(rust_config)
-end
--- }
 -- LSP/Java {
 M.setup_java = function()
     local project_name = fn.fnamemodify(fn.getcwd(), ':p:h:t')
@@ -218,14 +193,191 @@ end
 -- }
 -- LSP/Python {
 M.setup_python = function()
-    require'lspconfig'.pyright.setup{}
+    require('lspconfig').pyright.setup{}
 end
 -- }
--- LST/Elixir {
-M.setup_elixir = function()
-    require('lspconfig').elixirls.setup{
-        cmd = { fn.expand("~/bin/elixir-ls/latest/language_server.sh") }
+-- LSP/Mason+Ember+other-frontend-stuff {
+M.setup_ember_with_mason = function()
+    local lsp = require('lspconfig')
+
+    local function readFile(filePath)
+      local file = io.open(filePath, "r")
+
+      if not file then
+        return nil
+      end
+
+      local contents = file:read("*all")
+
+      file:close()
+
+      return contents;
+    end -- readFile
+
+    local function read_nearest_ts_config(fromFile)
+      local rootDir = lsp.util.root_pattern('tsconfig.json')(fromFile);
+
+      if not rootDir then
+        return nil
+      end
+
+      local tsConfig = rootDir .. "/tsconfig.json"
+      local contents = readFile(tsConfig)
+
+      if not contents then
+        return nil
+      end
+
+      
+      local isGlint = string.find(contents, '"glint"')
+
+      return {
+        isGlint = not not isGlint,
+        rootDir = rootDir,
+      };
+    end -- read_nearest_ts_config
+
+    local function is_glint_project(filename, bufnr) 
+      local result = read_nearest_ts_config(filename)
+      
+      if not result then 
+        return nil
+      end
+
+      if (not result.isGlint) then 
+        return nil
+      end
+
+      return result.rootDir
+    end -- is_glint_project
+
+    local function is_ts_project(filename, bufnr) 
+      local result = read_nearest_ts_config(filename)
+
+      if not result then
+        return nil
+      end 
+
+      if (result.isGlint) then 
+        return nil
+      end
+
+      return result.rootDir
+    end -- is_glint_project
+
+    -- via https://github.com/NullVoxPopuli/dotfiles/blob/main/home/.config/nvim/lua/plugin-config/lsp/init.lua
+    local servers = {
+        -- Languages
+        "html", "cssls", "tsserver",
+        -- Frameworks
+        "ember", "glint",
+        -------------- Tools
+        "graphql", "tailwindcss", "graphql",
+        -------------- Linting / Formatting
+        "eslint"
     }
+    -- eslint config, see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#eslint
+    local settings = {
+      tailwindcss = {
+        tailwindCSS = {
+          includeLanguages = {
+            markdown = "html",
+            handlebars = "html",
+            javascript = {
+              glimmer = "javascript"
+            },
+            typescript = {
+              glimmer = "javascript"
+            }
+          }
+        }
+      },
+      tsserver = {
+        maxTsServerMemory = 8000,
+        implicitProjectConfig = {
+          experimentalDecorators = true
+        },
+      }
+    }
+
+    require('mason').setup {
+      ui = {
+        icons = {
+          server_installed = "✓",
+          server_pending = "➜",
+          server_uninstalled = "✗"
+        }
+      }
+    }
+
+    require('mason-lspconfig').setup {
+      ensure_installed = servers,
+      automatic_installation = false
+    }
+
+    local capabilities = require('cmp_nvim_lsp').default_capabilities(
+        vim.lsp.protocol.make_client_capabilities()
+    )
+
+    local conditional_features = function (client, bufnr) 
+        if client.server_capabilities.inlayHintProvider then
+            vim.lsp.buf.inlay_hint(bufnr, true)
+        end
+    end
+
+    for _, serverName in ipairs(servers) do
+      local server = lsp[serverName]
+
+      if (server) then
+        if (serverName == 'tsserver') then 
+          server.setup({
+            single_file_support = false,
+            root_dir = is_ts_project,
+            capabilities = capabilities,
+            settings = settings[serverName],
+            on_attach = function(client, bufnr)
+              keymap(bufnr)
+              conditional_features(client, bufnr)
+            end
+          })
+        elseif (serverName == 'glint') then 
+          server.setup({
+            root_dir = is_glint_project,
+            capabilities = capabilities,
+            settings = settings[serverName],
+            on_attach = function(client, bufnr)
+              keymap(bufnr)
+              conditional_features(client, bufnr)
+            end
+          })
+        elseif (serverName == 'eslint') then 
+          server.setup({
+            filetypes = { 
+              "javascript", "typescript", 
+              "typescript.glimmer", "javascript.glimmer", 
+              "json", 
+              "markdown" 
+            },
+            on_attach = function(client, bufnr)
+              vim.api.nvim_create_autocmd("BufWritePre", {
+                buffer = bufnr,
+                command = "EslintFixAll",
+              })
+              conditional_features(client, bufnr)
+            end,
+          })
+        else
+          server.setup({
+            capabilities = capabilities,
+            settings = settings[serverName],
+            on_attach = function(client, bufnr)
+              keymap(bufnr)
+              conditional_features(client, bufnr)
+            end
+          })
+        end
+      end
+    end
 end
 -- }
 -- Telescope {
@@ -255,7 +407,8 @@ M.setup_tree_sitter = function()
     local tree_sitter = require('nvim-treesitter.configs')
     t_s_config = {
         ensure_installed = {
-            "java", "python", "rust", "scala", "lua", "bash",
+            "java", "python", "scala", "lua", "bash",
+            "javascript", "typescript", "glimmer",
             "dockerfile", "hocon", "json", "yaml", "toml", "comment", "regex",
             "sql"
         },
@@ -297,10 +450,9 @@ M.setup = function()
     M.setup_pandoc()
     M.setup_cmp()
     M.setup_metals()
-    M.setup_rust()
     M.setup_java()
     M.setup_python()
-    M.setup_elixir()
+    M.setup_ember_with_mason()
     M.setup_telescope()
     M.setup_tree_sitter()
     M.setup_virtual_lines()
