@@ -128,7 +128,7 @@ M.setup_java = function()
     -- update is required if JDTLS changed/upgraded
     local jdtls_path_macos = '/opt/homebrew/Cellar/jdtls/1.24.0/libexec'
     local jdtls_path_linux = '$HOME/bin/jdt-ls/latest'
-    local launcher_plugin_path = '/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar'
+    local launcher_plugin_path = '/plugins/org.eclipse.equinox.launcher_1.6.500.v20230717-2134.jar'
     -- MacOS as a special case and Linux as "all others"
     local function launcher_paths ()
         if vim.loop.os_uname().sysname == 'Darwin' then 
