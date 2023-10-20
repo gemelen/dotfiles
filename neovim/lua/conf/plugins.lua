@@ -125,20 +125,22 @@ end
 M.setup_java = function()
     local project_name = fn.fnamemodify(fn.getcwd(), ':p:h:t')
     local workspace_dir = '/tmp/jdtls-workspace/' .. project_name
-    -- update is required if JDTLS changed/upgraded
-    local jdtls_path_macos = '/opt/homebrew/Cellar/jdtls/1.24.0/libexec'
+    -- symlink update is required if JDTLS changed/upgraded
+    local jdtls_path_macos = '$HOME/bin/jdt-ls/latest/libexec'
     local jdtls_path_linux = '$HOME/bin/jdt-ls/latest'
+    -- launcher name changes in some releases, so check that
     local launcher_plugin_path = '/plugins/org.eclipse.equinox.launcher_1.6.500.v20230717-2134.jar'
-    -- MacOS as a special case and Linux as "all others"
-    local function launcher_paths ()
-        if vim.loop.os_uname().sysname == 'Darwin' then 
-            return (jdtls_path_macos .. launcher_plugin_path), (jdtls_path_macos .. '/config_mac')
-        else 
-            return (fn.expand(jdtls_path_linux .. launcher_plugin_path)), (fn.expand(jdtls_path_linux .. '/config_linux'))
-        end
+    local jdtls_path = 'FIXME if you see that'
+    local config_name = 'FIXME if you see that'
+    if vim.loop.os_uname().sysname == 'Darwin' then 
+        jdtls_path = jdtls_path_macos
+        config_name = '/config_mac'
+    else 
+        jdtls_path = jdtls_path_linux
+        config_name = '/config_linux'
     end
-
-    local jar, jdtlscfg = launcher_paths()
+    local jar = fn.expand(jdtls_path .. launcher_plugin_path)
+    local jdtlscfg = fn.expand(jdtls_path .. config_name)
     jdtls_config = {
       cmd = {
         'java',
