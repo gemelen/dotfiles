@@ -103,7 +103,7 @@ M.setup_metals = function()
     }
   )
   api.nvim_create_autocmd(
-    {"BufEnter, CursorHold, InsertLeave"},
+    {"BufEnter", "CursorHold", "InsertLeave"},
     {
       group = "LSPMetals",
       pattern = "<buffer>",
