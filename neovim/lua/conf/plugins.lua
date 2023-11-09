@@ -425,7 +425,7 @@ end
 -- Terraform {
 M.setup_terraform = function()
     require('lspconfig').terraformls.setup{}
-    require('lspconfig').tflint.setup{}
+    -- require('lspconfig').tflint.setup{}
     api.nvim_create_augroup("LSPTerraform", {})
     api.nvim_create_autocmd(
       "FileType",
@@ -440,7 +440,7 @@ M.setup_terraform = function()
       "BufWritePre",
       {
         group = "LSPTerraform",
-        pattern = {"*.tf", "*.tfvars"},
+        pattern = {"terraform"},
         command = "lua vim.lsp.buf.format({ async = false})",
       }
     )
