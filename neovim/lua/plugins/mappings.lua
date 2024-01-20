@@ -28,8 +28,8 @@ map("n", "<leader>tv",  "<cmd>lua require('metals.tvp').toggle_tree_view()<CR>",
 map("n", "<leader>tr",  "<cmd>lua require('metals.tvp').reveal_in_tree()<CR>", slnr)
 -- }
 -- telescope {
-map("n", "gds",         "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", slnr)
-map("n", "gws",         "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", slnr)
+map("n", "<leader>ds",  "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", slnr)
+map("n", "<leader>ws",  "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>", slnr)
 map("n", "<leader>f",   "<cmd>lua require('telescope.builtin').find_files()<CR>", slnr)
 map("n", "<leader>fh",  "<cmd>lua require('telescope.builtin').find_files({hidden = true})<CR>", slnr)
 map("n", "<leader>b",   "<cmd>lua require('telescope.builtin').buffers()<CR>", slnr)
