@@ -166,7 +166,9 @@ M.setup_java = function()
       },
 
       init_options = {
-        bundles = {}
+        bundles = {
+          fn.glob(fn.expand('$HOME/bin/com.microsoft.java.debug.plugin.jar'), 1)
+        }
       },
     }
 

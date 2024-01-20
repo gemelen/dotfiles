@@ -102,4 +102,6 @@ return require("packer").startup(function(use)
         use({ "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" })
         -- code actions look&feel enhancement
         use({ "kosayoda/nvim-lightbulb" })
+        -- DAP
+        use({ "mfussenegger/nvim-dap" })
 end)
