@@ -477,9 +477,18 @@ M.setup_stuff = function()
     {"BufEnter", "BufWinEnter"},
     {
       group = "AdditionalFileTypes",
-      desc = "Assign 'json' filetype to Avro files",
+      desc = "Assign 'JSON' filetype to Avro files",
       pattern = {"*.avro", "*.avsc"},
       command = "setlocal filetype=json"
+    }
+  )
+  api.nvim_create_autocmd(
+    {"BufEnter", "BufWinEnter"},
+    {
+      group = "AdditionalFileTypes",
+      desc = "Assign 'HOCON' filetype to .conf files",
+      pattern = {"*.conf"},
+      command = "setlocal filetype=hocon"
     }
   )
 end
