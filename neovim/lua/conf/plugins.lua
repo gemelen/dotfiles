@@ -158,7 +158,7 @@ M.setup_java = function()
         '-data', workspace_dir
       },
 
-      root_dir = require('jdtls.setup').find_root({'pom.xml', 'mvnw', 'gradlew'}),
+      root_dir = require('jdtls.setup').find_root({'pom.xml', 'mvnw', 'gradlew', 'build.gradle'}),
 
       settings = {
         java = {
