@@ -478,7 +478,7 @@ M.setup_stuff = function()
     {
       group = "AdditionalFileTypes",
       desc = "Assign 'json' filetype to Avro files",
-      pattern = {"*.avro"},
+      pattern = {"*.avro", "*.avsc"},
       command = "setlocal filetype=json"
     }
   )
