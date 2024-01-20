@@ -73,7 +73,7 @@ M.setup_metals = function()
     { 
       group = "LSPMetals", 
       desc = "Metals initialization for a file", 
-      pattern = {"scala", "sbt"}, 
+      pattern = {"scala", "sbt"},
       command = "lua require('metals').initialize_or_attach(metals_config)"
     }
   )
