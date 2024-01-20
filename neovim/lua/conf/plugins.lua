@@ -472,6 +472,16 @@ M.setup_stuff = function()
       command = "PackerCompile"
     }
   )
+  api.nvim_create_augroup("AdditionalFileTypes", {})
+  api.nvim_create_autocmd(
+    {"BufEnter", "BufWinEnter"},
+    {
+      group = "AdditionalFileTypes",
+      desc = "Assign 'json' filetype to Avro files",
+      pattern = {"*.avro"},
+      command = "setlocal filetype=json"
+    }
+  )
 end
 -- }
 M.setup = function()
