@@ -27,7 +27,7 @@ return require("packer").startup(function(use)
         -- file browser
         use({
           "nvim-neo-tree/neo-tree.nvim",
-            branch = "v2.x",
+            branch = "v3.x",
             requires = { 
               "nvim-lua/plenary.nvim",
               "kyazdani42/nvim-web-devicons",
