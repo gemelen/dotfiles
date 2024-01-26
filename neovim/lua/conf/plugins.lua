@@ -412,7 +412,7 @@ M.setup_tree_sitter = function()
     t_s_config = {
         ensure_installed = {
             "java", "python", "scala", "lua", "bash",
-            "hcl",
+            "hcl", "dot",
             "javascript", "typescript", "glimmer",
             "dockerfile", "hocon", "json", "yaml", "toml", "comment", "regex",
             "sql"
