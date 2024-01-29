@@ -123,13 +123,18 @@ end
 -- }
 -- LSP/Java {
 M.setup_java = function()
+    local jdtls_project_marker = {
+        'pom.xml', 'build.gradle', -- main project file
+        '.gradle',                 -- or directory
+        'mvnw', 'gradlew'          -- or a wrapper for Maven/Gradle
+    }
+
     local project_name = fn.fnamemodify(fn.getcwd(), ':p:h:t')
     local workspace_dir = '/tmp/jdtls-workspace/' .. project_name
     -- symlink update is required if JDTLS changed/upgraded
     local jdtls_path_macos = '$HOME/bin/jdt-ls/latest/libexec'
     local jdtls_path_linux = '$HOME/bin/jdt-ls/latest'
-    -- launcher name changes in some releases, so check that
-    local launcher_plugin_path = '/plugins/org.eclipse.equinox.launcher_1.6.500.v20230717-2134.jar'
+    local launcher_plugin_path = fn.expand('/plugins/org.eclipse.equinox.launcher_*.jar')
     local jdtls_path = 'FIXME if you see that'
     local config_name = 'FIXME if you see that'
     if vim.loop.os_uname().sysname == 'Darwin' then 
@@ -158,7 +163,7 @@ M.setup_java = function()
         '-data', workspace_dir
       },
 
-      root_dir = require('jdtls.setup').find_root({'pom.xml', 'mvnw', 'gradlew', 'build.gradle'}),
+      root_dir = require('jdtls.setup').find_root(jdtls_project_marker),
 
       settings = {
         java = {
