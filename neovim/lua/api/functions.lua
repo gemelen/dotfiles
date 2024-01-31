@@ -8,7 +8,12 @@ local function opt(scope, key, value)
   end
 end
 
-local function map(mode, lhs, rhs, opts)
+local function map(mode, lhs, rhs, dsc)
+  local options = { noremap = true, silent = true, desc = dsc }
+  api.nvim_set_keymap(mode, lhs, rhs, options)
+end
+
+local function mapopts(mode, lhs, rhs, opts)
   local options = { noremap = true, silent = true }
   if opts then
     options = vim.tbl_extend("force", options, opts)
@@ -19,4 +24,5 @@ end
 return {
   opt = opt,
   map = map,
+  mapopts = mapopts,
 }
