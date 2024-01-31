@@ -514,6 +514,21 @@ M.setup_virtual_lines = function()
     require('lsp_lines').setup()
 end
 -- }
+-- UFO {
+M.setup_ufo = function()
+    vim.o.foldcolumn = '1' -- '0' is not bad
+    vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+    vim.o.foldlevelstart = 99
+    vim.o.foldenable = true
+
+    -- method 3 (via documentation), depends on Tree-sitter
+    require('ufo').setup({
+        provider_selector = function(bufnr, filetype, buftype)
+            return {'treesitter', 'indent'}
+        end
+    })
+end
+-- }
 -- all not included above {
 M.setup_stuff = function()
   api.nvim_create_autocmd(
@@ -522,14 +537,6 @@ M.setup_stuff = function()
       desc = "Attach lightbulb plugin",
       pattern = "*",
       command = "lua require('nvim-lightbulb').update_lightbulb()"
-    }
-  )
-  api.nvim_create_autocmd(
-    "BufWritePost",
-    {
-      desc = "Run packer compile every time list of plugins changed",
-      pattern = "plugins/list.lua",
-      command = "PackerCompile"
     }
   )
   api.nvim_create_augroup("AdditionalFileTypes", {})
@@ -565,6 +572,7 @@ M.setup = function()
     M.setup_tree_sitter()
     M.setup_terraform()
     M.setup_virtual_lines()
+    M.setup_ufo()
     M.setup_stuff()
 end
 

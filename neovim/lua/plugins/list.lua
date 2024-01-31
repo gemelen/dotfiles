@@ -2,6 +2,12 @@ require("lazy").setup({
     { "myusuf3/numbers.vim" },
     { url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim" },
     { "lukas-reineke/indent-blankline.nvim" },
+    { "xiyaowong/transparent.nvim" }, -- Switch on/off/Toggle transparency for editor itself
+    { "kevinhwang91/nvim-ufo", dependencies = { 
+            "kevinhwang91/promise-async"
+        } 
+    },      -- Folding configuration
+    { "kevinhwang91/nvim-bqf" },
     { "hrsh7th/nvim-cmp", dependencies = {
             {"neovim/nvim-lspconfig"},
             {"hrsh7th/cmp-nvim-lsp"},
