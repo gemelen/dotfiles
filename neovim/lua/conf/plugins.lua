@@ -474,7 +474,7 @@ M.setup_tree_sitter = function()
             "java", "python", "scala", "lua", "bash",
             "hcl", "dot",
             "javascript", "typescript", "glimmer",
-            "dockerfile", "hocon", "json", "yaml", "toml", "comment", "regex",
+            "dockerfile", "hocon", "json", "yaml", "toml", "comment", "regex", "vimdoc",
             "sql"
         },
         highlight = {
