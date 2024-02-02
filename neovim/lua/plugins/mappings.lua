@@ -2,10 +2,16 @@ local f = require("api.functions")
 local map = f.map
 
 -- Neo-tree {
-map("n", "<C-g>", ":Neotree toggle<CR>")
+map("n", "<C-f>", ":Neotree position=float source=filesystem reveal=true toggle<CR>")
+map("n", "<C-g>", ":Neotree position=float source=git_status toggle<CR>")
+map("n", "<C-b>", ":Neotree position=float source=buffers toggle<CR>")
 -- }
--- glow {
-map("n", "<C-l>", ":Glow<CR>")
+-- Telescope/generic {
+map("n", "<leader>f",   "<cmd>lua require('telescope.builtin').find_files()<CR>", "find [f]iles")
+map("n", "<leader>fh",  "<cmd>lua require('telescope.builtin').find_files({hidden = true})<CR>", "find [f]iles, include [h]idden")
+map("n", "<leader>b",   "<cmd>lua require('telescope.builtin').buffers()<CR>", "show [b]uffers")
+map("n", "<leader>g",   "<cmd>lua require('telescope.builtin').live_grep()<CR>", "show [g]rep")
+map("n", "<leader>q",   "<cmd>lua require('telescope.builtin').quickfix()<CR>", "show [q]uickfix")
 -- }
 -- LSP {
 map("n", "gd",          "<cmd>lua vim.lsp.buf.definition()<CR>", "[g]o to [d]efinition" )
@@ -21,19 +27,14 @@ map("n", "<leader>t",   "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", "fo
 map("n", "<leader>ca",  "<cmd>lua vim.lsp.buf.code_action()<CR>", "[c]ode [a]ctions")
 map("n", "<leader>cl",  "<cmd>lua vim.lsp.codelens.run()<CR>", "[c]ode [l]ense")
 -- }
--- metals {
+-- Metals {
 map("n", "<leader>a",   "<cmd>lua require('metals').open_all_diagnostics()<CR>", "[a]ll diagnostics")
 map("n", "<leader>tv",  "<cmd>lua require('metals.tvp').toggle_tree_view()<CR>", "[t]ree [v]iew")
 map("n", "<leader>tr",  "<cmd>lua require('metals.tvp').reveal_in_tree()<CR>", "[r]eveal in tree view")
 -- }
--- telescope {
+-- Telescope/lsp {
 map("n", "<leader>ds",  "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>", "[d]ocument [s]ymbols")
 map("n", "<leader>ws",  "<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<CR>", "[w]orkspace [s]ymbols")
-map("n", "<leader>f",   "<cmd>lua require('telescope.builtin').find_files()<CR>", "find [f]iles")
-map("n", "<leader>fh",  "<cmd>lua require('telescope.builtin').find_files({hidden = true})<CR>", "find [f]iles, include [h]idden")
-map("n", "<leader>b",   "<cmd>lua require('telescope.builtin').buffers()<CR>", "show [b]uffers")
-map("n", "<leader>g",   "<cmd>lua require('telescope.builtin').live_grep()<CR>", "show [g]rep")
-map("n", "<leader>q",   "<cmd>lua require('telescope.builtin').quickfix()<CR>", "show [q]uickfix")
 map("n", "mc",          "<cmd>lua require('telescope').extensions.metals.commands()<CR>", "[m]etals [c]ommands")
 -- }
 -- lsp_lines {
@@ -42,4 +43,7 @@ map("n", "<leader>z",   "<cmd>lua require('lsp_lines').toggle()<CR>", "toggle sh
 -- UFO {
 map("n", "zR",   "<cmd>lua require('ufo').openAllFolds()<CR>")
 map("n", "zM",   "<cmd>lua require('ufo').closeAllFolds()<CR>")
+-- }
+-- glow {
+map("n", "<C-l>", ":Glow<CR>")
 -- }

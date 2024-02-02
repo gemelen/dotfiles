@@ -250,7 +250,7 @@ M.setup_java = function()
     {
       group = "LSPJava",
       desc = "Assign 'java' filetype to pom.xml file",
-      pattern = "pom.xml",
+      pattern = {"pom.xml", "build.gradle"},
       command = "setlocal filetype=java"
     }
   )

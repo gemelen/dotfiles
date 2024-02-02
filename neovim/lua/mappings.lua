@@ -1,5 +1,5 @@
 local f = require("api.functions")
-local map = f.map
+local map = f.mapopts
 local opt = f.opt
 
 -- Global mappings {
