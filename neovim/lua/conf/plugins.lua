@@ -37,6 +37,7 @@ M.setup_cmp = function()
             { name = 'nvim_lsp' },
             { name = 'vsnip' },
             { name = 'buffer' },
+            { name = 'nvim_lsp_signature_help' },
         },
         experimental = {
             ghost_text = true,
@@ -471,11 +472,12 @@ M.setup_tree_sitter = function()
     local tree_sitter = require('nvim-treesitter.configs')
     t_s_config = {
         ensure_installed = {
-            "java", "python", "scala", "lua", "bash",
-            "hcl", "dot",
+            "java", "python", "scala", "lua", "bash", "sql",
+            "hcl", "dot", "dockerfile",
             "javascript", "typescript", "glimmer",
-            "dockerfile", "hocon", "json", "yaml", "toml", "comment", "regex", "vimdoc",
-            "sql"
+            "markdown", "markdown_inline",
+            "hocon", "json", "yaml", "toml",
+            "comment", "regex", "vim", "vimdoc"
         },
         highlight = {
             enable = true
@@ -489,6 +491,15 @@ M.setup_terraform = function()
     require('lspconfig').terraformls.setup{}
     -- require('lspconfig').tflint.setup{}
     api.nvim_create_augroup("LSPTerraform", {})
+    api.nvim_create_autocmd(
+      {"BufEnter", "BufWinEnter"},
+      {
+        group = "LSPTerraform",
+        desc = "Assign 'Terraform' filetype to .tf files",
+        pattern = {"*.tf"},
+        command = "setlocal filetype=terraform"
+      }
+    )
     api.nvim_create_autocmd(
       "FileType",
       {
