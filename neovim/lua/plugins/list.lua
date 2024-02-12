@@ -38,9 +38,9 @@ require("lazy").setup({
             { "nvim-telescope/telescope.nvim" }
         }
     },
-    { "vim-pandoc/vim-pandoc-syntax" },
-    { "vim-pandoc/vim-pandoc" },
-    { "npxbr/glow.nvim" },
+    -- { "vim-pandoc/vim-pandoc-syntax" },
+    -- { "vim-pandoc/vim-pandoc" },
+    { "npxbr/glow.nvim", config = true, cmd = "Glow" },
     { "tpope/vim-fugitive" },
     { "nvim-treesitter/nvim-treesitter" },
     { "neovim/nvim-lspconfig" },

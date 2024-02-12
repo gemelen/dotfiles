@@ -569,6 +569,15 @@ M.setup_stuff = function()
       command = "setlocal filetype=hocon"
     }
   )
+  api.nvim_create_autocmd(
+    {"BufEnter", "BufWinEnter"},
+    {
+      group = "AdditionalFileTypes",
+      desc = "Assign 'Markdown' filetype to .md files",
+      pattern = {"*.md"},
+      command = "setlocal filetype=markdown"
+    }
+  )
 end
 -- }
 M.setup = function()
