@@ -575,7 +575,7 @@ M.setup_stuff = function()
       group = "AdditionalFileTypes",
       desc = "Assign 'Markdown' filetype to .md files",
       pattern = {"*.md"},
-      command = "setlocal filetype=markdown"
+      command = "setlocal filetype=markdown shiftwidth=2"
     }
   )
 end

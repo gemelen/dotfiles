@@ -69,3 +69,7 @@ opt("o", "splitright", true)
 opt("o", "termguicolors", true)
 opt("o", "completeopt", "menu,menuone,noselect,noinsert")
 opt("b", "fileformat", "unix")
+-- spellcheck [
+opt("o", "spelling", "en_gb")
+opt("o", "spell", true)
+-- ]
