@@ -1,29 +1,18 @@
-local f = require("api.functions")
-local api = vim.api
-local global = vim.g
-local fn = vim.fn
-local opt = f.opt
-
+-- vi:nospell
 local M = {}
 
 -- neotree {
 M.setup_neo_tree = function()
-    global["neo_tree_remove_legacy_commands"] = 1
+    vim.g["neo_tree_remove_legacy_commands"] = 1
 end
 -- }
--- Pandoc {
-M.setup_pandoc = function()
-    global["vim_markdown_toc_autofit"] = 1
-    opt("w", "conceallevel", 2)
-end
---}
 -- nvim-cmp {
 M.setup_cmp = function()
     local cmp = require('cmp')
     cmp_config = {
         snippet = {
             expand = function(args)
-                fn["vsnip#anonymous"](args.body)
+                vim.fn["vsnip#anonymous"](args.body)
             end,
         },
         mapping = {
@@ -68,8 +57,8 @@ M.setup_metals = function()
     }
   )
 
-  api.nvim_create_augroup("LSPMetals", {})
-  api.nvim_create_autocmd(
+  vim.api.nvim_create_augroup("LSPMetals", {})
+  vim.api.nvim_create_autocmd(
     "FileType",
     { 
       group = "LSPMetals", 
@@ -78,7 +67,7 @@ M.setup_metals = function()
       command = "lua require('metals').initialize_or_attach(metals_config)"
     }
   )
-  api.nvim_create_autocmd(
+  vim.api.nvim_create_autocmd(
     "FileType",
     {
       group = "LSPMetals",
@@ -87,7 +76,7 @@ M.setup_metals = function()
       command = "setlocal omnifunc=v:lua.vim.lsp.omnifunc"
     }
   )
-  api.nvim_create_autocmd(
+  vim.api.nvim_create_autocmd(
     "BufWritePre",
     {
       group = "LSPMetals",
@@ -95,7 +84,7 @@ M.setup_metals = function()
       command = "lua vim.lsp.buf.format()"
     }
   )
-  api.nvim_create_autocmd(
+  vim.api.nvim_create_autocmd(
     "CursorHold",
     {
       group = "LSPMetals",
@@ -103,7 +92,7 @@ M.setup_metals = function()
       command = "lua vim.lsp.buf.document_highlight()"
     }
   )
-  api.nvim_create_autocmd(
+  vim.api.nvim_create_autocmd(
     {"BufEnter", "CursorHold", "InsertLeave"},
     {
       group = "LSPMetals",
@@ -111,7 +100,7 @@ M.setup_metals = function()
       command = "lua vim.lsp.codelens.refresh()"
     }
   )
-  api.nvim_create_autocmd(
+  vim.api.nvim_create_autocmd(
     "CursorMoved",
     {
       group = "LSPMetals",
@@ -146,12 +135,12 @@ M.setup_java = function()
     extendedClientCapabilities.progressReportProvider = true
     extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
 
-    local project_name = fn.fnamemodify(fn.getcwd(), ':p:h:t')
+    local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
     local workspace_dir = '/tmp/jdtls-workspace/' .. project_name
     -- symlink update is required if JDTLS changed/upgraded
     local jdtls_path_macos = '$HOME/bin/jdt-ls/latest/libexec'
     local jdtls_path_linux = '$HOME/bin/jdt-ls/latest'
-    local launcher_plugin_path = fn.expand('/plugins/org.eclipse.equinox.launcher_*.jar')
+    local launcher_plugin_path = vim.fn.expand('/plugins/org.eclipse.equinox.launcher_*.jar')
     local jdtls_path = 'FIXME if you see that'
     local config_name = 'FIXME if you see that'
     if vim.loop.os_uname().sysname == 'Darwin' then 
@@ -161,8 +150,8 @@ M.setup_java = function()
         jdtls_path = jdtls_path_linux
         config_name = '/config_linux'
     end
-    local jar = fn.expand(jdtls_path .. launcher_plugin_path)
-    local jdtlscfg = fn.expand(jdtls_path .. config_name)
+    local jar = vim.fn.expand(jdtls_path .. launcher_plugin_path)
+    local jdtlscfg = vim.fn.expand(jdtls_path .. config_name)
     jdtls_config = {
       cmd = {
         'java',
@@ -195,7 +184,7 @@ M.setup_java = function()
 
       init_options = {
         bundles = {
-          fn.glob(fn.expand('$HOME/bin/com.microsoft.java.debug.plugin.jar'), 1)
+          vim.fn.glob(vim.fn.expand('$HOME/bin/com.microsoft.java.debug.plugin.jar'), 1)
         },
         extendedClientCapabilities = extendedClientCapabilities,
       },
@@ -236,8 +225,8 @@ M.setup_java = function()
     }):find()
   end
 
-  api.nvim_create_augroup("LSPJava", {})
-  api.nvim_create_autocmd(
+  vim.api.nvim_create_augroup("LSPJava", {})
+  vim.api.nvim_create_autocmd(
     "FileType",
     {
       group = "LSPJava",
@@ -246,7 +235,7 @@ M.setup_java = function()
       command = "lua require('jdtls').start_or_attach(jdtls_config)"
     }
   )
-  api.nvim_create_autocmd(
+  vim.api.nvim_create_autocmd(
     "BufReadPre",
     {
       group = "LSPJava",
@@ -489,9 +478,8 @@ end
 -- Terraform {
 M.setup_terraform = function()
     require('lspconfig').terraformls.setup{}
-    -- require('lspconfig').tflint.setup{}
-    api.nvim_create_augroup("LSPTerraform", {})
-    api.nvim_create_autocmd(
+    vim.api.nvim_create_augroup("LSPTerraform", {})
+    vim.api.nvim_create_autocmd(
       {"BufEnter", "BufWinEnter"},
       {
         group = "LSPTerraform",
@@ -500,7 +488,7 @@ M.setup_terraform = function()
         command = "setlocal filetype=terraform"
       }
     )
-    api.nvim_create_autocmd(
+    vim.api.nvim_create_autocmd(
       "FileType",
       {
         group = "LSPTerraform",
@@ -509,7 +497,7 @@ M.setup_terraform = function()
         command = "setlocal shiftwidth=2"
       }
     )
-    api.nvim_create_autocmd(
+    vim.api.nvim_create_autocmd(
       "BufWritePre",
       {
         group = "LSPTerraform",
@@ -542,7 +530,7 @@ end
 -- }
 -- all not included above {
 M.setup_stuff = function()
-  api.nvim_create_autocmd(
+  vim.api.nvim_create_autocmd(
     {"CursorHold", "CursorHoldI"},
     {
       desc = "Attach lightbulb plugin",
@@ -550,8 +538,8 @@ M.setup_stuff = function()
       command = "lua require('nvim-lightbulb').update_lightbulb()"
     }
   )
-  api.nvim_create_augroup("AdditionalFileTypes", {})
-  api.nvim_create_autocmd(
+  vim.api.nvim_create_augroup("AdditionalFileTypes", {})
+  vim.api.nvim_create_autocmd(
     {"BufEnter", "BufWinEnter"},
     {
       group = "AdditionalFileTypes",
@@ -560,7 +548,7 @@ M.setup_stuff = function()
       command = "setlocal filetype=json"
     }
   )
-  api.nvim_create_autocmd(
+  vim.api.nvim_create_autocmd(
     {"BufEnter", "BufWinEnter"},
     {
       group = "AdditionalFileTypes",
@@ -569,7 +557,7 @@ M.setup_stuff = function()
       command = "setlocal filetype=hocon"
     }
   )
-  api.nvim_create_autocmd(
+  vim.api.nvim_create_autocmd(
     {"BufEnter", "BufWinEnter"},
     {
       group = "AdditionalFileTypes",
@@ -582,7 +570,6 @@ end
 -- }
 M.setup = function()
     M.setup_neo_tree()
-    M.setup_pandoc()
     M.setup_cmp()
     M.setup_metals()
     M.setup_java()
