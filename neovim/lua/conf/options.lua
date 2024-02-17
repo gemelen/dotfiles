@@ -37,9 +37,9 @@ vim.o.wildignore = vim.o.wildignore .. "*/target/*"
 ---- Text properties
 local indent = 2
 ---- [ control tab to spaces insert
-vim.bo.tabstop = indent
-vim.bo.shiftwidth = indent
-vim.bo.expandtab = true
+vim.o.tabstop = indent
+vim.o.shiftwidth = indent
+vim.o.expandtab = true
 ---- ]
 vim.bo.smartindent = true
 vim.o.showmode = true

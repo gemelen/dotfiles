@@ -1,9 +1,13 @@
 return {
-  { "neovim/nvim-lspconfig" },
-  { "williamboman/mason.nvim" },
-  { "williamboman/mason-lspconfig.nvim", dependencies = {
-      { "neovim/nvim-lspconfig"},
-      { "williamboman/mason.nvim"},
+  { "williamboman/mason-lspconfig.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      { "williamboman/mason.nvim" },
+      { "neovim/nvim-lspconfig",
+	dependencies = {
+	  { "folke/neodev.nvim", }
+	}
+      }
     }
   },
   { "scalameta/nvim-metals" },
