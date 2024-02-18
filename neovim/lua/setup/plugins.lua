@@ -297,14 +297,6 @@ end
 -- }
 -- all not included above {
 M.setup_stuff = function()
-  vim.api.nvim_create_autocmd(
-    {"CursorHold", "CursorHoldI"},
-    {
-      desc = "Attach lightbulb plugin",
-      pattern = "*",
-      command = "lua require('nvim-lightbulb').update_lightbulb()"
-    }
-  )
   -- Terraform
   vim.api.nvim_create_augroup("lsp-terraform", {})
   vim.api.nvim_create_autocmd(
