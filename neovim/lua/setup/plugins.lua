@@ -4,7 +4,7 @@ local M = {}
 -- nvim-cmp {
 M.setup_cmp = function()
     local cmp = require('cmp')
-    cmp_config = {
+    local cmp_config = {
         snippet = {
             expand = function(args)
                 vim.fn["vsnip#anonymous"](args.body)
@@ -55,9 +55,9 @@ M.setup_metals = function()
   vim.api.nvim_create_augroup("lsp-scala", {})
   vim.api.nvim_create_autocmd(
     "FileType",
-    { 
-      group = "lsp-scala", 
-      desc = "Metals: init or attach language server", 
+    {
+      group = "lsp-scala",
+      desc = "Metals: init or attach language server",
       pattern = {"scala", "sc", "sbt"},
       command = "lua require('metals').initialize_or_attach(metals_config)",
     }
