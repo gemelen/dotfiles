@@ -235,7 +235,7 @@ end
 -- Telescope {
 M.setup_telescope = function()
     local telescope = require('telescope')
-    extensions_config = {
+    local extensions_config = {
         extensions = {
             fzf = {
                 fuzzy = true,
@@ -252,6 +252,7 @@ M.setup_telescope = function()
     telescope.load_extension('fzf')
     telescope.load_extension('ui-select')
     telescope.load_extension('git_worktree')
+    telescope.load_extension('yaml_schema')
 end
 -- }
 -- Tree-sitter {
