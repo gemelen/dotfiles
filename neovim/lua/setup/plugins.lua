@@ -4,10 +4,23 @@ local M = {}
 -- nvim-cmp {
 M.setup_cmp = function()
     local cmp = require('cmp')
+    
+    local is_a_comment = function()
+          -- disable completion in comments
+          local context = require('cmp.config.context')
+          -- keep command mode completion enabled when cursor is in a comment
+          if vim.api.nvim_get_mode().mode == 'c' then
+            return true
+          else
+            return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
+          end
+        end
+
     local cmp_config = {
+        enabled = is_a_comment,
         snippet = {
             expand = function(args)
-                vim.fn["vsnip#anonymous"](args.body)
+                require('luasnip').lsp_expand(args.body)
             end,
         },
         mapping = {
@@ -19,12 +32,17 @@ M.setup_cmp = function()
         },
         sources = {
             { name = 'nvim_lsp' },
-            { name = 'vsnip' },
-            { name = 'buffer' },
+            { name = 'nvim_lsp_document_symbol' },
             { name = 'nvim_lsp_signature_help' },
+            { name = 'buffer' },
+            { name = 'nvim_lua' },
         },
+        window = {
+          documentation = cmp.config.window.bordered(),
+        },
+        view = { entries = "custom", selection_order = 'near_cursor' },
         experimental = {
-            ghost_text = true,
+            ghost_text = false,
         }
     }
     cmp.setup(cmp_config)
