@@ -1,10 +1,13 @@
 // cats
-import $ivy.`org.typelevel::cats-core:2.8.0`
-import $ivy.`org.typelevel::cats-effect:3.3.13`
+import $ivy.`org.typelevel::cats-core:2.10.0`
+import $ivy.`org.typelevel::cats-effect:3.5.3`
 // circe
 import $ivy.`io.circe::circe-core:0.14.1`
 import $ivy.`io.circe::circe-generic:0.14.1`
 import $ivy.`io.circe::circe-parser:0.14.1`
+// fs2
+import $ivy.`co.fs2::fs2-core:3.9.3`
+import $ivy.`co.fs2::fs2-io:3.9.3`
 // actual imports
 import cats._
 import cats.data._
