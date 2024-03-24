@@ -29,8 +29,10 @@ function M.setup()
     "dotls",
     "gradle_ls",
     "helm_ls",
-    "terraformls"
+    "terraformls",
+    "lemminx"
   }
+  ---@diagnostic disable-next-line: unused-local
   local manually_handled_servers = {
     "scala",
     "java",

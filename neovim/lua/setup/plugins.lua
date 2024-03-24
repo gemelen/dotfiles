@@ -4,7 +4,7 @@ local M = {}
 -- nvim-cmp {
 M.setup_cmp = function()
     local cmp = require('cmp')
-    
+
     local is_a_comment = function()
           -- disable completion in comments
           local context = require('cmp.config.context')
@@ -50,19 +50,22 @@ end
 -- }
 -- LSP/Scala {
 M.setup_metals = function()
-  metals_config = require('metals').bare_config()
-  metals_config.settings = {
-     showInferredType = true,
-     showImplicitArguments = true,
-     showImplicitConversionsAndClasses = true
+  METALS_CONFIG = require('metals').bare_config()
+  METALS_CONFIG.settings = {
+    -- serverProperties = {"-XX:+UseZGC", "-XX:+ZGenerational"},
+    showInferredType = true,
+    showImplicitArguments = true,
+    showImplicitConversionsAndClasses = true,
+    autoImportBuild = "all",
+    enableSemanticHighlighting = true
   }
 
-  metals_config.init_options.statusBarProvider = "on"
+  METALS_CONFIG.init_options.statusBarProvider = "on"
 
   -- add completion
-  metals_config.capabilities = require('cmp_nvim_lsp').default_capabilities()
+  METALS_CONFIG.capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-  metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  METALS_CONFIG.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
       virtual_text = {
         prefix = '◈',
@@ -70,56 +73,17 @@ M.setup_metals = function()
     }
   )
 
-  vim.api.nvim_create_augroup("lsp-scala", {})
-  vim.api.nvim_create_autocmd(
-    "FileType",
-    {
-      group = "lsp-scala",
-      desc = "Metals: init or attach language server",
-      pattern = {"scala", "sc", "sbt"},
-      command = "lua require('metals').initialize_or_attach(metals_config)",
-    }
-  )
-  vim.api.nvim_create_autocmd(
-    "FileType",
-    {
-      group = "lsp-scala",
-      desc = "Metals: setup completion",
+  local init = function ()
+    require('metals').initialize_or_attach(METALS_CONFIG)
+    vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
+  end
+
+  local lsp_scala_gid = vim.api.nvim_create_augroup("lsp-scala", {})
+  vim.api.nvim_create_autocmd( "FileType", {
+      group = lsp_scala_gid,
+      desc = "Metals: init or attach language server, setup completion",
       pattern = {"scala", "sbt"},
-      command = "setlocal omnifunc=v:lua.vim.lsp.omnifunc"
-    }
-  )
-  vim.api.nvim_create_autocmd(
-    "BufWritePre",
-    {
-      group = "lsp-scala",
-      desc = "Metals: run scalafmt on write",
-      pattern = {"scala", "sbt"},
-      command = "lua vim.lsp.buf.format()"
-    }
-  )
-  vim.api.nvim_create_autocmd(
-    "CursorHold",
-    {
-      group = "lsp-scala",
-      pattern = "<buffer>",
-      command = "lua vim.lsp.buf.document_highlight()"
-    }
-  )
-  vim.api.nvim_create_autocmd(
-    {"BufEnter", "CursorHold", "InsertLeave"},
-    {
-      group = "lsp-scala",
-      pattern = "<buffer>",
-      command = "lua vim.lsp.codelens.refresh()"
-    }
-  )
-  vim.api.nvim_create_autocmd(
-    "CursorMoved",
-    {
-      group = "lsp-scala",
-      pattern = "<buffer>",
-      command = "lua vim.lsp.buf.clear_references()"
+      callback = init
     }
   )
 end
@@ -156,10 +120,10 @@ M.setup_java = function()
     local launcher_plugin_path = vim.fn.expand('/plugins/org.eclipse.equinox.launcher_*.jar')
     local jdtls_path = 'FIXME if you see that'
     local config_name = 'FIXME if you see that'
-    if vim.loop.os_uname().sysname == 'Darwin' then 
+    if vim.loop.os_uname().sysname == 'Darwin' then
         jdtls_path = jdtls_path_macos
         config_name = '/config_mac'
-    else 
+    else
         jdtls_path = jdtls_path_linux
         config_name = '/config_linux'
     end
@@ -204,7 +168,7 @@ M.setup_java = function()
     }
 
   vim.lsp.handlers['language/status'] = function() end
-  
+
   -- UI
   local finders = require'telescope.finders'
   local sorters = require'telescope.sorters'
@@ -276,7 +240,7 @@ end
 -- Tree-sitter {
 M.setup_tree_sitter = function()
     local tree_sitter = require('nvim-treesitter.configs')
-    t_s_config = {
+    local t_s_config = {
         ensure_installed = {
             "java", "python", "scala", "lua", "bash", "sql",
             "hcl", "dot", "dockerfile",
@@ -286,8 +250,22 @@ M.setup_tree_sitter = function()
             "comment", "regex", "vim", "vimdoc"
         },
         highlight = {
-            enable = true
+            enable = true,
+            ---@diagnostic disable-next-line: unused-local
+            disable = function(lang, buf)
+                local max_filesize = 10 * 1024 * 1024 -- 10 MiB
+                local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                if ok and stats and stats.size > max_filesize then
+                    return true
+                end
+            end,
         },
+        incremental_selection = {
+            enable = true,
+        },
+        indent = {
+          enable = true,
+        }
     }
     tree_sitter.setup(t_s_config)
 end
@@ -315,20 +293,30 @@ end
 -- }
 -- all not included above {
 M.setup_stuff = function()
+  -- LSP
+  vim.api.nvim_create_autocmd( "BufWritePre" , {
+      callback = function ()
+        if vim.bo.filetype == "java" then
+          return
+        end
+        vim.lsp.buf.format({async = false, formatting_options = nil })
+      end
+    }
+  )
+  vim.api.nvim_create_autocmd( "CursorMoved" , {
+      command = "lua vim.lsp.buf.clear_references()"
+    }
+  )
   -- Terraform
   vim.api.nvim_create_augroup("lsp-terraform", {})
-  vim.api.nvim_create_autocmd(
-    "FileType",
-    {
+  vim.api.nvim_create_autocmd( "FileType", {
       group = "lsp-terraform",
       desc = "Spacing configuration for Terraform files",
       pattern = {"terraform"},
       command = "setlocal shiftwidth=2"
     }
   )
-  vim.api.nvim_create_autocmd(
-    "BufWritePre",
-    {
+  vim.api.nvim_create_autocmd( "BufWritePre", {
       group = "lsp-terraform",
       pattern = {"terraform"},
       command = "lua vim.lsp.buf.format({ async = false})",
