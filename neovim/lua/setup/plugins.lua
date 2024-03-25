@@ -48,6 +48,19 @@ M.setup_cmp = function()
     cmp.setup(cmp_config)
 end
 -- }
+-- Neo-tree {
+M.setup_neotree = function ()
+  local conf = {
+    default_component_configs = {
+          file_size = { enabled = false, },
+          type = { enabled = false, },
+          last_modified = { enabled = false, },
+          created = { enabled = false, },
+    }
+  }
+  require("neo-tree").setup(conf)
+end
+-- }
 -- LSP/Scala {
 M.setup_metals = function()
   METALS_CONFIG = require('metals').bare_config()
@@ -326,6 +339,7 @@ M.setup_stuff = function()
 -- }
 M.setup = function()
     M.setup_cmp()
+    M.setup_neotree()
     M.setup_metals()
     M.setup_java()
     M.setup_telescope()

@@ -1,4 +1,4 @@
-return { 
+return {
   "nvim-neo-tree/neo-tree.nvim",
   lazy = false, -- I want it always on
   branch = "v3.x",
