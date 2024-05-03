@@ -54,6 +54,6 @@ vim.o.termguicolors = true
 vim.o.completeopt = "menu,menuone,noselect,noinsert"
 vim.bo.fileformat = "unix"
 -- spellcheck [
-vim.o.spelling = "en_gb"
+vim.o.spelllang = "en_gb"
 vim.o.spell = true
 -- ]
