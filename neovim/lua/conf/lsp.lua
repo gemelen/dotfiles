@@ -14,14 +14,9 @@ end
 
 function M.setup()
   local mason_servers = {
-    "html",
-    "cssls",
-    "tailwindcss",
-    "tsserver",
-    "ember",
-    "glint",
-    "graphql",
-    "eslint",
+    "lemminx",
+    "bashls",
+    "dockerls",
     "lua_ls",
     "pyright",
     "jsonls",
@@ -30,7 +25,7 @@ function M.setup()
     "gradle_ls",
     "helm_ls",
     "terraformls",
-    "lemminx"
+    "ts_ls"
   }
   ---@diagnostic disable-next-line: unused-local
   local manually_handled_servers = {

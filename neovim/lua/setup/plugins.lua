@@ -255,9 +255,11 @@ M.setup_tree_sitter = function()
     local tree_sitter = require('nvim-treesitter.configs')
     local t_s_config = {
         ensure_installed = {
-            "java", "python", "scala", "lua", "bash", "sql",
+            "java", "python", "scala", "lua", "sql",
+            "bash",
+            "gitcommit", "git_config", "git_rebase",
             "hcl", "dot", "dockerfile",
-            "javascript", "typescript", "glimmer",
+            "javascript", "typescript",
             "markdown", "markdown_inline",
             "hocon", "json", "yaml", "toml",
             "comment", "regex", "vim", "vimdoc"
