@@ -18,10 +18,10 @@ export LC_ADDRESS=${LANG}
 export LC_TELEPHONE=${LANG}
 export LC_IDENTIFICATION=${LANG}
 export LC_ALL=${LANG}
-export LC_NUMERIC=${local_c}
-export LC_TIME=${local_c}
-export LC_PAPER=${local_c}
-export LC_MEASUREMENT=${local_c}
+export LC_NUMERIC=${locale_c}
+export LC_TIME=${locale_c}
+export LC_PAPER=${locale_c}
+export LC_MEASUREMENT=${locale_c}
 
 # Github
 export GH_REGISTRY_RO=$(kwallet-query -f local kdewallet -r gh_registry_ro)
