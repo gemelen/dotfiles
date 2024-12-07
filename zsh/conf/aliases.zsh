@@ -1,6 +1,8 @@
 # shortcuts
 alias l="ls -lAh --color=auto"
 
+alias amo="cs launch ammonite --scala 2.13"
+
 # redefinitions
 alias docker="podman"
 alias dockerimages="podman images"
