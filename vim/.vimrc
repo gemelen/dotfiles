@@ -1,7 +1,5 @@
-# minimalstic configuration just to mimic neovim experience
 set nocompatible
 set ruler
-set list listchars="tab:\uBB\uBB,trail:\uB7,nbsp:~"
 set hlsearch
 set ignorecase smartcase
 set wildmenu
