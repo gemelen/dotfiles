@@ -1,0 +1,10 @@
+setopt source_trace
+zmodload zsh/zprof
+
+source "${ZDOTDIR}"/tools/helper.zsh
+
+source_directory "${ZDOTDIR}"/conf
+
+defer_directory "${ZDOTDIR}"/plugins
+
+zprof

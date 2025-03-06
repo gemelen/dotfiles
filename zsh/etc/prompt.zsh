@@ -1,10 +1,7 @@
+#!/usr/bin/env zsh
+
 autoload -U promptinit
 autoload -Uz vcs_info
-
-zstyle :compinstall filename "${ZDOTDIR}/.zshrc"
-zstyle ':vcs_info:git:*' formats '%b'
-
-setopt prompt_subst
 
 precmd() {
     vcs_info
