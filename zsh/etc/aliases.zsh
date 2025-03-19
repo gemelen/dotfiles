@@ -14,8 +14,7 @@ alias amm="cs launch ammonite --scala 3.3 -- $ammonite_opts"
 alias amo="cs launch ammonite --scala 2.13 -- $ammonite_opts"
 alias amn="cs launch ammonite --scala 3.6 -- $ammonite_opts"
 
-# rsync from awilix, auth tied for any user at `theia` host with provided from file password
-local rawi="rsync -avz --append-verify --partial --progress --human-readable --stats --password-file=$XDG_CONFIG_HOME/rsync/awilix.secret rsync://theia@awilix.gemelen.net:34873/"
+local rawi="rsync -avz --append-verify --partial --progress --human-readable --stats --password-file=$XDG_CONFIG_HOME/rsync/FIXME rsync://USER@HOST:PORT/"
 alias rawif="$rawi/files ."
 alias rawiv="$rawi/video ."
 
