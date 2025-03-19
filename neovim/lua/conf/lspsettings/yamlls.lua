@@ -10,6 +10,7 @@ local yamlls_settings = require("yaml-companion").setup(
     [ 'https://json.schemastore.org/github-workflow.json'] = '/.github/workflows/*',
     [ 'https://json.schemastore.org/github-action' ] = '.github/**/action.{yml,yaml}',
     [ 'kubernetes' ] = '*.k8s.yaml',
+    [ 'https://cmake.org/cmake/help/latest/_downloads/3e2d73bff478d88a7de0de736ba5e361/schema.json' ] = 'CMakePresets.json',
 
 -- Kubernetes files detection is broken for me, the only way to force LSP for a file is to use modeline, pointing to a specific kind
 -- # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.31.2-standalone-strict/pod.json

@@ -1,20 +1,27 @@
 local M = {}
 
+---@param client vim.lsp.Client
+---@param bufnr integer?
 M.on_attach = function(client, bufnr)
-  if client.supports_method "textDocument/inlayHint" then
+  if client.supports_method(client, "textDocument/inlayHint") then
     vim.lsp.inlay_hint.enable(true, {})
   end
+
 end
 
 function M.common_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+  capabilities.textDocument.diagnostic.dynamicRegistration = true
+  capabilities.textDocument.foldingRange.dynamicRegistration = true
+  capabilities.textDocument.signatureHelp.dynamicRegistration = true
+  capabilities.textDocument.references.dynamicRegistration = true
+
   return capabilities
 end
 
 function M.setup()
   local mason_servers = {
-    "lemminx",
     "bashls",
     "dockerls",
     "lua_ls",
@@ -25,7 +32,9 @@ function M.setup()
     "gradle_ls",
     "helm_ls",
     "terraformls",
-    "ts_ls"
+    "ts_ls",
+    "clangd",
+    "neocmake"
   }
   ---@diagnostic disable-next-line: unused-local
   local manually_handled_servers = {
@@ -40,10 +49,7 @@ function M.setup()
   })
   local lspconfig = require("lspconfig")
 
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
   require("lspconfig.ui.windows").default_options.border = "rounded"
-
 
   for _, server in pairs(servers) do
     local opts = {

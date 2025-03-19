@@ -13,5 +13,7 @@ return {
         { "nvim-lua/plenary.nvim" },
         { "nvim-telescope/telescope.nvim" },
     },
-  }
+  },
+  { "folke/trouble.nvim", opts = {}, cmd = "Trouble", },
+  { "rktjmp/paperplanes.nvim" }
 }
