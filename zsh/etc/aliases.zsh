@@ -15,8 +15,9 @@ alias amo="cs launch ammonite --scala 2.13 -- $ammonite_opts"
 alias amn="cs launch ammonite --scala 3.6 -- $ammonite_opts"
 
 # rsync from awilix, auth tied for any user at `theia` host with provided from file password
-alias rawif="rsync -avz --append-verify --partial --progress --human-readable --stats --password-file=$XDG_CONFIG_HOME/rsync/awilix.secret rsync://theia@awilix.gemelen.net:34873/files ."
-alias rawiv="rsync -avz --append-verify --partial --progress --human-readable --stats --password-file=$XDG_CONFIG_HOME/rsync/awilix.secret rsync://theia@awilix.gemelen.net:34873/video ."
+local rawi="rsync -avz --append-verify --partial --progress --human-readable --stats --password-file=$XDG_CONFIG_HOME/rsync/awilix.secret rsync://theia@awilix.gemelen.net:34873/"
+alias rawif="$rawi/files ."
+alias rawiv="$rawi/video ."
 
 # places
 alias zdot='cd ${ZDOTDIR:-~}'
@@ -58,10 +59,11 @@ alias pls="podman container ls "
 alias plsa="podman container ls --all "
 
 alias pib="podman image build "
-alias pils="podman image ls "
+alias pils="podman images -a"
 alias pirm="podman image rm "
 alias prmi="pils --filter dangling=true --noheading --format \"{{.ID}}\"|xargs podman rmi -f"
 
-#source aliases.d/react-native.aliaces.zsh
+#source aliases.d/react-native.zsh
+#source aliases.d/xcode.zsh
 
 # vim: nospell

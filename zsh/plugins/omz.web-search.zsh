@@ -103,7 +103,7 @@ alias ppai='web_search ppai'
 alias wiki='web_search duckduckgo \!w'
 alias news='web_search duckduckgo \!n'
 alias map='web_search duckduckgo \!m'
-alias image='web_search duckduckgo \!i'
+alias di='web_search duckduckgo \!i'
 alias ducky='web_search duckduckgo \!'
 
 # other search engine aliases

@@ -1,16 +1,13 @@
 #!/usr/bin/env zsh
 
-# use `cat -v`
+# use `cat -v >/dev/null`
+# see `man zshzle`
 
 # Make sure that the terminal is in application mode when zle is active, since
 # only then values from $terminfo are valid
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
-  function zle-line-init() {
-    echoti smkx
-  }
-  function zle-line-finish() {
-    echoti rmkx
-  }
+  function zle-line-init() { echoti smkx }
+  function zle-line-finish() { echoti rmkx }
   zle -N zle-line-init
   zle -N zle-line-finish
 fi
@@ -21,8 +18,10 @@ bindkey -v
 autoload -U edit-command-line
 zle -N edit-command-line
 
-# [Esc-Esc] - Up a line of history
+# [Esc-Esc] - Open line in $EDITOR
 bindkey '^[^[' edit-command-line
+# [Esc-.]
+bindkey "^[."  insert-last-word #copy-prev-shell-word
 
 # [PageUp] - Up a line of history
 bindkey -M viins "${terminfo[kpp]}" up-line-or-history
@@ -60,8 +59,8 @@ bindkey -M viins '^[[1;5D' backward-word
 bindkey -M vicmd '^[[1;5D' backward-word
 # [Ctrl-r] - Search backward incrementally
 bindkey '^R' history-incremental-search-backward
-# [Esc-.]
-bindkey "^[m" copy-prev-shell-word # ?insert-last-word
+# [Ctrl-w] - Delete word without stopping on hyphens and such
+bindkey '^W' backward-delete-word
 
 # fzf
 [[ -f /etc/zsh_completion.d/fzf-key-bindings ]] && source "/etc/zsh_completion.d/fzf-key-bindings"

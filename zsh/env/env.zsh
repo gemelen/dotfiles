@@ -20,12 +20,22 @@ LC_MEASUREMENT=${locale_c}
 export LANG LC_CTYPE LC_COLLATE LC_MONETARY LC_MESSAGES LC_NAME LC_ADDRESS LC_TELEPHONE LC_IDENTIFICATION LC_NUMERIC LC_TIME LC_PAPER LC_MEASUREMENT
 
 # fzf, https://minsw.github.io/fzf-color-picker/
-export FZF_DEFAULT_OPTS="--keep-right --info=hidden --border=none --color=fg:-1,bg:-1,hl:#003a7d --color=fg+:#d0d0d0,bg+:#173691,hl+:#b891ff --color=info:#a5a84a,prompt:#e04f0b,pointer:#ff21b9 --color=marker:#80ff00,spinner:#8800ff,header:#58c0c4"
+FZF_DEFAULT_OPTS="--keep-right --info=hidden --border=none --color=fg:-1,bg:-1,hl:#003a7d --color=fg+:#d0d0d0,bg+:#173691,hl+:#b891ff --color=info:#a5a84a,prompt:#e04f0b,pointer:#ff21b9 --color=marker:#80ff00,spinner:#8800ff,header:#58c0c4"
 
-# ssh
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-
-# podman as docker
-export DOCKER_HOST="unix:///run/user/1000/podman/podman.sock"
+distro_kernel=`uname -s`
+case $distro_kernel in
+  "Linux")
+    # fzf
+    export FZF_DEFAULT_OPTS
+    # ssh
+    export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+    # podman as docker
+    export DOCKER_HOST="unix:///run/user/1000/podman/podman.sock"
+    ;;
+  "SunOS")
+    ;;
+  *)
+    ;;
+esac
 
 source $ZDOTDIR/env/host.`hostname`

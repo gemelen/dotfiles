@@ -1,0 +1,7 @@
+- ipf
+- ipnat
+- vmadm
+- dladm
+- ipadm
+- ifconfig
+- java

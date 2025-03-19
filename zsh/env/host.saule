@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+export EDITOR=vim
+export TZ=Europe/Berlin
+
+# vim: ft=zsh
+
