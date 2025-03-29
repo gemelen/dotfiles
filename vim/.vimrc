@@ -23,7 +23,7 @@ set cursorline cursorlineopt=screenline
 set smoothscroll scrolljump=-50 scrolloff=20
 
 set showmatch
-set foldenable foldmethod=indent
+set foldenable foldmethod=indent foldlevel=999
 
 set hlsearch ignorecase smartcase
 
