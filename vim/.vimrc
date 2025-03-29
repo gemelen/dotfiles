@@ -8,7 +8,8 @@ set autoread
 set viminfofile=NONE
 set backup undofile
 set patchmode=".orig"
-set backupdir+="$XDG_DATA_HOME/vim/,/tmp, ." undodir+="$XDG_DATA_HOME/vim/,/tmp, ."
+set backupdir=$XDG_DATA_HOME/vim//,/tmp//, .
+set undodir=$XDG_DATA_HOME/vim//,/tmp//, .
 
 set modeline
 
@@ -27,7 +28,7 @@ set foldenable foldmethod=indent
 set hlsearch ignorecase smartcase
 
 set textwidth=100
-set tabstop=2 shiftwidth=0 softtabstop=-1 "settings in this group set to follow `tabstop` 
+set tabstop=2 shiftwidth=0 softtabstop=-1 "settings in this group set to follow `tabstop`
 set expandtab smarttab shiftround
 set autoindent smartindent
 set list listchars="trail:~"
