@@ -8,8 +8,8 @@ set autoread
 set viminfofile=NONE
 set backup undofile
 set patchmode=".orig"
-set backupdir=$XDG_DATA_HOME/vim//,/tmp//, .
-set undodir=$XDG_DATA_HOME/vim//,/tmp//, .
+set backupdir=$XDG_DATA_HOME/vim//,/tmp//,.
+set undodir=$XDG_DATA_HOME/vim//,/tmp//,.
 
 set modeline
 
@@ -18,7 +18,7 @@ set clipboard^=unnamed,unnamedplus
 set splitbelow splitright
 set wildmenu wildignorecase wildignore+=*~,*.swp
 set showmode statusline=%(%y%)%(%F%)%([%p%%]%)
-set ruler rulerformat=%4l\≡\ %4v⦀\ %p%%
+set ruler rulerformat=\≡%2.4l\:⦀%2.4v\ %2.3p%%
 set cursorline cursorlineopt=screenline
 set smoothscroll scrolljump=-50 scrolloff=20
 
